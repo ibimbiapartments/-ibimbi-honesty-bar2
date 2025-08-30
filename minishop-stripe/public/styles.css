@@ -22,3 +22,23 @@
 .cart-total{display:flex;justify-content:space-between;align-items:center;font-size:1.1rem;padding-top:8px}
 .footer{margin-top:28px;text-align:center;color:#666}
 .container.narrow{max-width:560px}
+/* Header centrato con logo sopra al titolo */
+.header.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.header.center .logo {
+  height: 80px;   /* regola altezza a piacere (60–100px va bene) */
+  width: auto;
+  display: block;
+}
+
+.header.center h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}

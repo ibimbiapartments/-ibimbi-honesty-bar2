@@ -1,6 +1,6 @@
 [
   {
-    "price": "price_1S1mf6HbLwIGRC3Ko5Zi4ekb",
+    "price": "price_1S1sXCHKetfT2yfaOxKHMG22",
     "name": "Coco Cola 33cl",
     "unit_amount": 200,
     "currency": "EUR",
@@ -8,7 +8,7 @@
     "description": "Bottiglia PET 0,5L. Conservare al fresco."
   },
   {
-    "price": "price_1S1me8HbLwIGRC3KYPYWg5at",
+    "price": "price_1S1sWmHKetfT2yfa3aczWv9R",
     "name": "Acqua Naturale 33cl",
     "unit_amount": 500,
     "currency": "EUR",
@@ -16,7 +16,7 @@
     "description": "Acqua Naturale 33cl."
   },
   {
-    "price": "price_XXXX_SNACK_50G",
+    "price": "price_1S1sXeHKetfT2yfahbaVfGDp",
     "name": "Snack salati 50g",
     "unit_amount": 300,
     "currency": "EUR",

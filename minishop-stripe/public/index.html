@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I Bimbi – Honesty Bar</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>I Bimbi – Honesty Bar</h1>
+      <p>Scansiona, scegli cosa prendi e paga con carta/Apple Pay/Google Pay.</p>
+    </header>
+
+    <section class="controls">
+      <label for="room">N° Camera</label>
+      <input id="room" type="text" inputmode="numeric" placeholder="es. 3" maxlength="5" />
+    </section>
+
+    <section id="menu" class="grid"></section>
+
+    <section class="cart">
+      <div id="cart-summary">Nessun articolo nel carrello.</div>
+      <button id="checkout" class="btn" disabled>Vai al pagamento</button>
+    </section>
+
+    <footer class="footer">
+      <small>Grazie per il tuo contributo ♥</small>
+    </footer>
+  </main>
+
+  <script>
+    // Configuration: pick one endpoint based on your host
+    // Netlify: '/.netlify/functions/create-checkout-session'
+    // Vercel:  '/api/create-checkout-session'
+    const ENDPOINT = (location.hostname.endsWith("netlify.app"))
+      ? "/.netlify/functions/create-checkout-session"
+      : "/api/create-checkout-session";
+
+    const state = {
+      catalog: [],
+      cart: {}, // priceId -> { item, qty }
+    };
+
+    function formatPrice(cents, currency = "EUR") {
+      return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(cents / 100);
+    }
+
+    async function loadCatalog() {
+      const res = await fetch("catalog.json");
+      state.catalog = await res.json();
+      renderMenu();
+      // Autofill room from URL ?room=
+      const params = new URLSearchParams(location.search);
+      const r = params.get("room");
+      if (r) document.getElementById("room").value = r;
+    }
+
+    function addToCart(item) {
+      const current = state.cart[item.price] || { item, qty: 0 };
+      current.qty += 1;
+      state.cart[item.price] = current;
+      renderCart();
+    }
+
+    function changeQty(priceId, delta) {
+      const current = state.cart[priceId];
+      if (!current) return;
+      current.qty += delta;
+      if (current.qty <= 0) delete state.cart[priceId];
+      renderCart();
+    }
+
+    function renderMenu() {
+      const menu = document.getElementById("menu");
+      menu.innerHTML = "";
+      state.catalog.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" loading="lazy" />
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p>${item.description || ""}</p>
+            <div class="price">${formatPrice(item.unit_amount, item.currency)}</div>
+            <button class="btn small">Aggiungi</button>
+          </div>
+        `;
+        card.querySelector("button").addEventListener("click", () => addToCart(item));
+        menu.appendChild(card);
+      });
+    }
+
+    function renderCart() {
+      const summary = document.getElementById("cart-summary");
+      const checkoutBtn = document.getElementById("checkout");
+      const entries = Object.values(state.cart);
+      if (entries.length === 0) {
+        summary.textContent = "Nessun articolo nel carrello.";
+        checkoutBtn.disabled = true;
+        return;
+      }
+      let total = 0;
+      summary.innerHTML = "";
+      entries.forEach(({ item, qty }) => {
+        total += item.unit_amount * qty;
+        const row = document.createElement("div");
+        row.className = "cart-row";
+        row.innerHTML = `
+          <span>${item.name}</span>
+          <div class="qty">
+            <button class="btn tiny">-</button>
+            <strong>${qty}</strong>
+            <button class="btn tiny">+</button>
+          </div>
+          <span>${formatPrice(item.unit_amount * qty, item.currency)}</span>
+        `;
+        const [minus, plus] = row.querySelectorAll("button");
+        minus.addEventListener("click", () => changeQty(item.price, -1));
+        plus.addEventListener("click", () => changeQty(item.price, +1));
+        summary.appendChild(row);
+      });
+      const totalRow = document.createElement("div");
+      totalRow.className = "cart-total";
+      totalRow.innerHTML = `<span>Totale</span><strong>${formatPrice(total, "EUR")}</strong>`;
+      summary.appendChild(totalRow);
+      checkoutBtn.disabled = false;
+    }
+
+    async function checkout() {
+      const room = document.getElementById("room").value.trim();
+      const line_items = Object.values(state.cart).map(({ item, qty }) => ({
+        price: item.price,
+        quantity: qty
+      }));
+      const body = { line_items, room };
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) {
+        alert("Errore durante la creazione del pagamento. Riprova o contatta lo staff.");
+        return;
+      }
+      const data = await res.json();
+      if (data.url) {
+        location.href = data.url;
+      } else {
+        alert("Risposta inattesa. Contatta lo staff.");
+      }
+    }
+
+    document.getElementById("checkout").addEventListener("click", checkout);
+    loadCatalog();
+  </script>
+</body>
+</html>

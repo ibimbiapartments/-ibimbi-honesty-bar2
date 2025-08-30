@@ -34,6 +34,7 @@
 
 .header.center .logo {
   height: 80px;   /* regola altezza a piacere (60–100px va bene) */
+  max-width:100%;
   width: auto;
   display: block;
 }

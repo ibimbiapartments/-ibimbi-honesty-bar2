@@ -29,14 +29,17 @@ exports.handler = async (event) => {
       mode: "payment",
       line_items: safe_items,
       allow_promotion_codes: true,
-      custom_fields: [
-        {
-          key: "room_number",
-          label: { type: "custom", custom: "Numero camera" },
-          type: "text",
-          text: { maximum_length: 10, minimum_length: 0, default_value: String(room || "") }
-        }
-      ],
+custom_fields: [
+  {
+    key: "room_number",
+    label: { type: "custom", custom: "Numero camera" },
+    type: "text",
+    text: {
+      maximum_length: 10,
+      ...(room ? { default_value: String(room) } : {})
+    }
+  }
+],
       client_reference_id: room ? `room:${room}` : undefined,
       // Enable Stripe Tax automatically if you use it:
       // automatic_tax: { enabled: true },

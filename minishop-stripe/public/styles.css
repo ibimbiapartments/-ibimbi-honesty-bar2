@@ -43,3 +43,17 @@
   margin: 0;
   font-size: 1.8rem;
 }
+.btn {
+  background-color: #FF8C00;      /* arancione scuro */
+  color: white;                    /* testo bianco */
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: #e67300;       /* arancione più scuro */
+}
+
+.btn:active {
+  background-color: #cc6600;       /* click effetto "premuto" */
+}

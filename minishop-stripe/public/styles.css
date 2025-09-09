@@ -15,7 +15,7 @@
 
 .btn {
   background-color: #7ba774;  /* sfondo verde bimbi chiaro */
-  color: #000;                /* testo bianco */
+  color: #000;                /* testo nero */
   border: none;
   border-radius: 14px;
   padding: 10px 14px;
@@ -30,7 +30,7 @@
 
 .btn:active {
   background-color: #2d5232;  /* click: ancora più scuro */
-
+}
 
 .btn.small{padding:8px 10px;border-radius:12px}
 .btn.tiny{padding:0 8px;height:28px;border-radius:10px}

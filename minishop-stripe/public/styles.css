@@ -11,7 +11,27 @@
 .card-body h3{margin:0 0 6px;font-size:1.1rem}
 .card-body p{margin:0 0 8px;color:#444;font-size:.95rem;min-height:36px}
 .price{font-weight:600;margin-bottom:8px}
-.btn{background:#111;color:#fff;border:none;border-radius:14px;padding:10px 14px;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15)}
+
+
+.btn {
+  background-color: #FF8C00;  /* sfondo arancione */
+  color: #fff;                /* testo bianco */
+  border: none;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0,0,0,.15);
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #e67300;  /* hover: più scuro */
+}
+
+.btn:active {
+  background-color: #cc6600;  /* click: ancora più scuro */
+
+
 .btn.small{padding:8px 10px;border-radius:12px}
 .btn.tiny{padding:0 8px;height:28px;border-radius:10px}
 .btn:disabled{opacity:.6;cursor:not-allowed}
@@ -43,17 +63,4 @@
   margin: 0;
   font-size: 1.8rem;
 }
-.btn {
-  background-color: #FF8C00;      /* arancione scuro */
-  color: white;                    /* testo bianco */
-  border: none;
-  transition: background-color 0.2s;
-}
 
-.btn:hover {
-  background-color: #e67300;       /* arancione più scuro */
-}
-
-.btn:active {
-  background-color: #cc6600;       /* click effetto "premuto" */
-}

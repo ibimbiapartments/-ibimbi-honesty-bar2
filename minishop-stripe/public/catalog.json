@@ -4,7 +4,7 @@
     "name": "Bibite - Soft Drinks ",
     "unit_amount": 200,
     "currency": "EUR",
-    "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80",
+    "image": "coke.jpg",
     "description": "Coke, Sprite, Pepesi, Coke ZERO"
   },
   {
@@ -12,7 +12,7 @@
     "name": "Acqua Minerale - Mineral Water",
     "unit_amount": 500,
     "currency": "EUR",
-    "image": "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&q=80",
+    "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80",
     "description": "Naturale o Gassata - Still or Sparkling"
   },
   {

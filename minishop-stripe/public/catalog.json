@@ -1,26 +1,26 @@
 [
   {
-    "price": "price_1S1sXCHKetfT2yfaOxKHMG22",
-    "name": "Coco Cola 33cl",
+    "price": "price_1S1mf6HbLwIGRC3Ko5Zi4ekb",
+    "name": "Bibite - Soft Drinks ",
     "unit_amount": 200,
     "currency": "EUR",
     "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80",
-    "description": "Bottiglia PET 0,5L. Conservare al fresco."
+    "description": "Coke, Sprite, Pepesi, Coke ZERO"
   },
   {
-    "price": "price_1S1sWmHKetfT2yfa3aczWv9R",
-    "name": "Acqua Naturale 33cl",
+    "price": "price_1S1mcDHbLwIGRC3KjUTD8H0v",
+    "name": "Acqua Minerale - Mineral Water",
     "unit_amount": 500,
     "currency": "EUR",
     "image": "https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=800&q=80",
-    "description": "Acqua Naturale 33cl."
+    "description": "Naturale o Gassata - Still or Sparkling"
   },
   {
-    "price": "price_1S1sXeHKetfT2yfahbaVfGDp",
-    "name": "Snack salati 50g",
+    "price": "price_1S1me8HbLwIGRC3KYPYWg5at",
+    "name": "Succhi - Juice",
     "unit_amount": 300,
     "currency": "EUR",
     "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&q=80",
-    "description": "Patatine artigianali 50g. Allergeni: può contenere tracce di glutine."
+    "description": "Vari gusti  / Different flavors"
   }
 ]

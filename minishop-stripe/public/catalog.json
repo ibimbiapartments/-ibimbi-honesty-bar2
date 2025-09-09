@@ -10,7 +10,7 @@
   {
     "price": "price_1S1mcDHbLwIGRC3KjUTD8H0v",
     "name": "Acqua Minerale - Mineral Water",
-    "unit_amount": 500,
+    "unit_amount": 100,
     "currency": "EUR",
     "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80",
     "description": "Naturale o Gassata - Still or Sparkling"
@@ -18,7 +18,7 @@
   {
     "price": "price_1S1me8HbLwIGRC3KYPYWg5at",
     "name": "Succhi - Juice",
-    "unit_amount": 300,
+    "unit_amount": 100,
     "currency": "EUR",
     "image": "succo.jpg",
     "description": "Vari gusti  / Different flavors"

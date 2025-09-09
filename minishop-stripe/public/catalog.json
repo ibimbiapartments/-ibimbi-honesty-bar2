@@ -20,7 +20,7 @@
     "name": "Succhi - Juice",
     "unit_amount": 300,
     "currency": "EUR",
-    "image": "succo.jpg?w=800&q=80",
+    "image": "succo.jpg",
     "description": "Vari gusti  / Different flavors"
   }
 ]

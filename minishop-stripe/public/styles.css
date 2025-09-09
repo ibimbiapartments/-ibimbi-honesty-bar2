@@ -14,7 +14,7 @@
 
 
 .btn {
-  background-color: #FF8C00;  /* sfondo arancione */
+  background-color: #7ba774;  /* sfondo arancione */
   color: #fff;                /* testo bianco */
   border: none;
   border-radius: 14px;
@@ -25,7 +25,7 @@
 }
 
 .btn:hover {
-  background-color: #e67300;  /* hover: più scuro */
+  background-color: #43754a;  /* hover: più scuro */
 }
 
 .btn:active {

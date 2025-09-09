@@ -14,8 +14,8 @@
 
 
 .btn {
-  background-color: #7ba774;  /* sfondo arancione */
-  color: #fff;                /* testo bianco */
+  background-color: #7ba774;  /* sfondo verde bimbi chiaro */
+  color: #000;                /* testo bianco */
   border: none;
   border-radius: 14px;
   padding: 10px 14px;
@@ -25,7 +25,7 @@
 }
 
 .btn:hover {
-  background-color: #43754a;  /* hover: più scuro */
+  background-color: #43754a;  /* verde bimbi scuro */
 }
 
 .btn:active {

@@ -68,4 +68,9 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvet
   display:flex;flex-direction:column;align-items:center;
   gap:8px;margin-top:12px
 }
-.stripe-badge{height:22px;width:auto;opacity:.8}
+.stripe-badge {
+  height: 24px;
+  width: auto;
+  display: block;
+  margin-top: 4px;
+}

@@ -1,94 +1,71 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif;background:#fafafa;color:#111}
+
 .container{max-width:960px;margin:0 auto;padding:24px}
+
+/* Header */
 .header{margin-bottom:16px}
 .header h1{margin:0 0 8px 0;font-size:1.8rem}
+
+/* Controls */
 .controls{display:flex;gap:12px;align-items:center;margin:12px 0 20px}
 .controls input{padding:10px 12px;border:1px solid #ddd;border-radius:12px;max-width:120px}
+
+/* Grid / Cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.card{background:white;border:1px solid #eee;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card{background:#fff;border:1px solid #eee;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .card img{width:100%;height:140px;object-fit:cover;background:#f0f0f0}
 .card-body{padding:12px}
 .card-body h3{margin:0 0 6px;font-size:1.1rem}
 .card-body p{margin:0 0 8px;color:#444;font-size:.95rem;min-height:36px}
 .price{font-weight:600;margin-bottom:8px}
 
-/* Bottoni */
+/* Buttons */
 .btn{
-  background-color:#7ba774;   /* sfondo verde bimbi chiaro */
-  color:#000;                 /* testo nero */
-  border:none;
-  border-radius:14px;
-  padding:10px 14px;
-  cursor:pointer;
+  background-color:#7ba774;   /* verde chiaro brand */
+  color:#000;                  /* testo nero */
+  border:none;border-radius:14px;
+  padding:10px 14px;cursor:pointer;
   box-shadow:0 2px 0 rgba(0,0,0,.15);
-  transition:background-color .2s ease;
+  transition:background-color .2s ease,color .2s ease;
 }
-.btn:hover{ background-color:#43754a; }   /* verde più scuro */
-.btn:active{ background-color:#2d5232; }  /* verde molto scuro */
-
+.btn:hover{background-color:#43754a}       /* verde medio */
+.btn:active{background-color:#2d5232;color:#fff} /* contrasto migliore su verde scuro */
 .btn.small{padding:8px 10px;border-radius:12px}
 .btn.tiny{padding:0 8px;height:28px;border-radius:10px}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 
-/* Carrello */
+/* Cart */
 .cart{position:sticky;bottom:0;background:#fff;border-top:1px solid #eee;padding:12px;border-radius:16px 16px 0 0;margin-top:24px}
 .cart-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed #eee}
 .cart-row:last-child{border-bottom:none}
 .qty{display:flex;align-items:center;gap:8px}
 .cart-total{display:flex;justify-content:space-between;align-items:center;font-size:1.1rem;padding-top:8px}
 
-/* Spazio per il messaggio "carrello vuoto" */
-#cart-summary{
-  padding:20px 0;            /* distanza sopra e sotto */
-  text-align:center;         /* opzionale */
-  color:#555;                /* leggermente più soft */
-}
-
-.footer{margin-top:28px;text-align:center;color:#666}
-.container.narrow{max-width:560px}
-
-/* Header centrato con logo sopra al titolo */
-.header.center{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-  margin-bottom:20px;
-  text-align:center;
-}
-.header.center .logo{
-  height:80px;   /* regola 60–100px a piacere */
-  max-width:100%;
-  width:auto;
-  display:block;
-}
-.header.center h1{
-  margin:0;
-  font-size:1.8rem;
-}
-
-.checkout-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px; /* distanza tra bottone e badge */
-  margin-top: 12px;
-}
-
-.stripe-badge {
-  height: 22px;     /* regolalo a piacere (18–28px consigliato) */
-  width: auto;
-  opacity: 0.8;     /* un po’ più leggero */
-}
-/* Colori più leggibili nel carrello */
-.cart, .cart-row, .cart-total, #cart-summary {
-  color: #000; /* nero pieno */
-}
+/* Cart empty state + testo più leggibile */
+#cart-summary{padding:20px 0;text-align:center}
+.cart,.cart-row,.cart-total,#cart-summary{color:#000}
 
 /* Totale evidenziato */
-.cart-total {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #000;
+.cart-total{font-weight:bold;font-size:1.2rem}
+
+/* Footer */
+.footer{margin-top:28px;text-align:center;color:#666}
+
+/* Narrow container option */
+.container.narrow{max-width:560px}
+
+/* Header centrato con logo */
+.header.center{
+  display:flex;flex-direction:column;align-items:center;
+  gap:12px;margin-bottom:20px;text-align:center
 }
+.header.center .logo{height:80px;max-width:100%;width:auto;display:block}
+.header.center h1{margin:0;font-size:1.8rem}
+
+/* Checkout badge */
+.checkout-container{
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;margin-top:12px
+}
+.stripe-badge{height:22px;width:auto;opacity:.8}

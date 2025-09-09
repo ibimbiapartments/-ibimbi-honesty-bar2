@@ -81,3 +81,14 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvet
   width: auto;
   opacity: 0.8;     /* un po’ più leggero */
 }
+/* Colori più leggibili nel carrello */
+.cart, .cart-row, .cart-total, #cart-summary {
+  color: #000; /* nero pieno */
+}
+
+/* Totale evidenziato */
+.cart-total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #000;
+}

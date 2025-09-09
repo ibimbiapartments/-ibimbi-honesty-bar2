@@ -67,3 +67,17 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvet
   margin:0;
   font-size:1.8rem;
 }
+
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* distanza tra bottone e badge */
+  margin-top: 12px;
+}
+
+.stripe-badge {
+  height: 22px;     /* regolalo a piacere (18–28px consigliato) */
+  width: auto;
+  opacity: 0.8;     /* un po’ più leggero */
+}

@@ -54,8 +54,11 @@ custom_fields: [
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: session.url }),
     };
-  } catch (err) {
-    console.error(err);
-    return { statusCode: 500, body: "Server error" };
-  }
-};
+} catch (err) {
+  console.error("❌ Stripe error:", err);
+  return {
+    statusCode: 500,
+    body: JSON.stringify({ error: err.message, raw: err }),
+  };
+}
+

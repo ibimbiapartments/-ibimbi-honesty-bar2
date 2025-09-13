@@ -43,7 +43,7 @@
     // Configuration: pick one endpoint based on your host
     // Netlify: '/.netlify/functions/create-checkout-session'
     // Vercel:  '/api/create-checkout-session'
-    const ENDPOINT = (location.hostname.endsWith("netlify.app"))
+    const ENDPOINT = "/.netlify/functions/create-checkout-session";
       ? "/.netlify/functions/create-checkout-session"
       : "/api/create-checkout-session";
 

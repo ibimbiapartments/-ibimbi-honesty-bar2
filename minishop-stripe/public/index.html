@@ -8,10 +8,10 @@
 </head>
 <body>
   <main class="container">
-<header class="header center">
-  <img src="logo.svg?v=1" alt="I Bimbi" class="logo">
-  <h1>I Bimbi – Honesty Bar</h1>
-</header>
+    <header class="header center">
+      <img src="logo.svg?v=1" alt="I Bimbi" class="logo">
+      <h1>I Bimbi – Honesty Bar</h1>
+    </header>
 
     <section class="controls">
       <label for="room">N° Camera</label>
@@ -20,19 +20,14 @@
 
     <section id="menu" class="grid"></section>
 
-
-<section class="cart">
-  <div id="cart-summary">Nessun articolo nel carrello.</div>
-  <div class="checkout-container">
-    <button id="checkout" class="btn" disabled>Vai al pagamento</button>
-
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
-     alt="Powered by Stripe" class="stripe-badge" />
-    
-    
-  </div>
-</section>
+    <section class="cart">
+      <div id="cart-summary">Nessun articolo nel carrello.</div>
+      <div class="checkout-container">
+        <button id="checkout" class="btn" disabled>Vai al pagamento</button>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
+             alt="Powered by Stripe" class="stripe-badge" />
+      </div>
+    </section>
 
     <footer class="footer">
       <small>Grazie per il tuo contributo ♥</small>
@@ -40,27 +35,31 @@
   </main>
 
   <script>
-    // Configuration: pick one endpoint based on your host
-    // Netlify: '/.netlify/functions/create-checkout-session'
-    // Vercel:  '/api/create-checkout-session'
+    // Endpoint Netlify fisso
     const ENDPOINT = "/.netlify/functions/create-checkout-session";
-    const state = {
-      catalog: [],
-      cart: {}, // priceId -> { item, qty }
-    };
+
+    const state = { catalog: [], cart: {} };
 
     function formatPrice(cents, currency = "EUR") {
       return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(cents / 100);
     }
 
     async function loadCatalog() {
-      const res = await fetch("catalog.json");
-      state.catalog = await res.json();
-      renderMenu();
-      // Autofill room from URL ?room=
-      const params = new URLSearchParams(location.search);
-      const r = params.get("room");
-      if (r) document.getElementById("room").value = r;
+      try {
+        const res = await fetch("catalog.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error("catalog.json non trovato");
+        state.catalog = await res.json();
+        renderMenu();
+
+        // Autofill camera da ?room=
+        const params = new URLSearchParams(location.search);
+        const r = params.get("room");
+        if (r) document.getElementById("room").value = r;
+      } catch (err) {
+        console.error("Errore caricamento catalogo:", err);
+        document.getElementById("menu").innerHTML =
+          "<p>Impossibile caricare il catalogo. Riprova più tardi.</p>";
+      }
     }
 
     function addToCart(item) {
@@ -135,26 +134,24 @@
     }
 
     async function checkout() {
-      const room = document.getElementById("room").value.trim();
-      const line_items = Object.values(state.cart).map(({ item, qty }) => ({
-        price: item.price,
-        quantity: qty
-      }));
-      const body = { line_items, room };
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-      if (!res.ok) {
+      try {
+        const room = document.getElementById("room").value.trim();
+        const line_items = Object.values(state.cart).map(({ item, qty }) => ({
+          price: item.price,
+          quantity: qty
+        }));
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ line_items, room })
+        });
+        if (!res.ok) throw new Error("Function error");
+        const data = await res.json();
+        if (data.url) location.href = data.url;
+        else alert("Risposta inattesa dal server.");
+      } catch (err) {
+        console.error("Checkout error:", err);
         alert("Errore durante la creazione del pagamento. Riprova o contatta lo staff.");
-        return;
-      }
-      const data = await res.json();
-      if (data.url) {
-        location.href = data.url;
-      } else {
-        alert("Risposta inattesa. Contatta lo staff.");
       }
     }
 

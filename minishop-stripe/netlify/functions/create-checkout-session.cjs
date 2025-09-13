@@ -37,17 +37,20 @@ exports.handler = async (event) => {
       mode: "payment",
       line_items: safe_items,
       allow_promotion_codes: true,
-      custom_fields: [
-        {
-          key: "room_number",
-          label: { type: "custom", custom: "Numero camera" },
-          type: "text",
-          text: {
-            maximum_length: 10,
-            default_value: String(room || ""),
-          },
-        },
-      ],
+// costruisco il campo testuale e aggiungo default_value SOLO se "room" è valorizzato
+const textField = { maximum_length: 10 };
+if (room && String(room).trim() !== "") {
+  textField.default_value = String(room).trim();
+}
+
+custom_fields: [
+  {
+    key: "room_number",
+    label: { type: "custom", custom: "Numero camera" },
+    type: "text",
+    text: textField,
+  }
+],
       client_reference_id: room ? `room:${room}` : undefined,
       success_url,
       cancel_url,

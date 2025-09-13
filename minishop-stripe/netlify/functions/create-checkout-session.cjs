@@ -32,36 +32,41 @@ exports.handler = async (event) => {
     const cancel_url =
       process.env.CANCEL_URL || `${origin}/cancel.html`;
 
-    // Niente minimum_length; default_value sempre stringa (anche vuota)
+    // Niente minimum_length; default_value solo se room è valorizzato
+    const textField = { maximum_length: 10 };
+    if (room && String(room).trim() !== "") {
+      textField.default_value = String(room).trim();
+    }
+
+    // Creazione sessione Stripe Checkout
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: safe_items,
       allow_promotion_codes: true,
-// costruisco il campo testuale e aggiungo default_value SOLO se "room" è valorizzato
-const textField = { maximum_length: 10 };
-if (room && String(room).trim() !== "") {
-  textField.default_value = String(room).trim();
-}
 
-custom_fields: [
-  {
-    key: "room_number",
-    label: { type: "custom", custom: "Numero camera" },
-    type: "text",
-    text: textField,
-  }
-],
+      // costruisco il campo testuale per numero camera
+      custom_fields: [
+        {
+          key: "room_number",
+          label: { type: "custom", custom: "Numero camera" },
+          type: "text",
+          text: textField,
+        },
+      ],
+
       client_reference_id: room ? `room:${room}` : undefined,
       success_url,
       cancel_url,
     });
 
+    // Risposta positiva: ritorno URL di checkout
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url: session.url }),
     };
   } catch (err) {
+    // Gestione errori con log dettagliato
     console.error("❌ Stripe error:", err);
     return {
       statusCode: 500,
@@ -69,4 +74,4 @@ custom_fields: [
       body: JSON.stringify({ error: err.message }),
     };
   }
-}; // <-- chiusura mancata prima
+}; // <-- chiusura handler

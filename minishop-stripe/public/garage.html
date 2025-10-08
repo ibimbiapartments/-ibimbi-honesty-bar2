@@ -5,128 +5,154 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>I Bimbi • Parcheggio & Caparra</title>
   <link rel="icon" href="/logo2.svg" />
+  <meta name="color-scheme" content="light dark" />
   <style>
-    :root{
-      --bg:#0b0e13;
-      --card:#131922;
-      --text:#eef1f4;
-      --muted:#9aa4b2;
-      --primary:#1e90ff;
-      --primary-hover:#187be0;
-      --success:#00b894;
-      --success-hover:#00a383;
-      --border:#1f2a3a;
-      --logo-bg:#f5f7fa;  /* sfondo chiaro sotto al logo */
+    :root {
+      /* Colori chiari coerenti con bar.ibimbiapartments.it */
+      --bg: #f7f8fa;             /* sfondo pagina */
+      --card: #ffffff;           /* card principale */
+      --text: #1b1e23;           /* testo principale */
+      --muted: #6b7280;          /* testo secondario */
+      --border: #e0e4ea;         /* bordo card */
+      --primary: #1e90ff;        /* blu pulsante */
+      --primary-hover: #1879da;
+      --success: #00b894;        /* verde pulsante */
+      --success-hover: #029d7f;
+      --radius: 20px;
+      --shadow: 0 6px 25px rgba(0,0,0,.08);
+      --logo-bg: #ffffff;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:"Segoe UI",Roboto,system-ui,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      padding:32px;
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 30px;
     }
-    .wrap{max-width:680px;width:100%}
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:36px 28px 32px;
-      box-shadow:0 10px 30px rgba(0,0,0,.4);
-      text-align:center;
+
+    .wrap {
+      width: 100%;
+      max-width: 700px;
     }
-    .logo-wrap{
-      width:86px;
-      height:86px;
-      background:var(--logo-bg);
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      margin:0 auto 16px;
-      box-shadow:0 4px 12px rgba(0,0,0,.25);
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px 28px 34px;
+      text-align: center;
     }
-    .logo-wrap img{
-      width:56px;
-      height:56px;
-      object-fit:contain;
+
+    /* Logo */
+    .logo-wrap {
+      width: 100px;
+      height: 100px;
+      background: var(--logo-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.1);
     }
-    h1{
-      font-size:26px;
-      letter-spacing:.3px;
-      margin-bottom:10px;
+
+    .logo-wrap img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
     }
-    p.lead{
-      color:var(--muted);
-      line-height:1.6;
-      margin:0 auto 24px;
-      max-width:520px;
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: var(--text);
     }
-    .box{
-      background:#0f141c;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:16px 20px;
-      margin:0 auto 26px;
-      max-width:500px;
+
+    p.lead {
+      color: var(--muted);
+      margin: 0 auto 24px;
+      line-height: 1.6;
+      font-size: 15.5px;
+      max-width: 520px;
     }
-    .row{
-      display:flex;
-      justify-content:space-between;
-      margin:6px 0;
-      font-size:15px;
+
+    .box {
+      background: #f1f3f6;
+      border-radius: 14px;
+      padding: 18px 20px;
+      text-align: left;
+      margin: 0 auto 28px;
+      max-width: 520px;
     }
-    .row b{color:#fff}
-    .hint{
-      font-size:13px;
-      color:var(--muted);
-      margin-top:8px;
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      margin: 6px 0;
     }
-    .btns{
-      display:grid;
-      gap:14px;
-      max-width:500px;
-      margin:0 auto;
+
+    .row b { color: #000; }
+    .hint { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+    .btns {
+      display: grid;
+      gap: 14px;
+      margin: 0 auto;
+      max-width: 520px;
     }
-    .btn{
-      display:inline-flex;
-      justify-content:center;
-      align-items:center;
-      padding:14px 18px;
-      border-radius:12px;
-      font-weight:600;
-      font-size:16px;
-      text-decoration:none;
-      color:#fff;
-      transition:.2s;
+
+    .btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      color: #fff;
+      transition: all .2s ease;
     }
-    .btn.pay{
-      background:var(--primary);
+
+    .btn.pay {
+      background: var(--primary);
     }
-    .btn.pay:hover{
-      background:var(--primary-hover);
+
+    .btn.pay:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
     }
-    .btn.deposit{
-      background:var(--success);
+
+    .btn.deposit {
+      background: var(--success);
     }
-    .btn.deposit:hover{
-      background:var(--success-hover);
+
+    .btn.deposit:hover {
+      background: var(--success-hover);
+      transform: translateY(-1px);
     }
-    footer{
-      margin-top:24px;
-      text-align:center;
-      font-size:12.5px;
-      color:var(--muted);
+
+    footer {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    @media (min-width: 720px) {
+      .btns { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- LOGO CENTRALE -->
       <div class="logo-wrap">
         <img src="/logo2.svg" alt="I Bimbi logo" />
       </div>
@@ -140,23 +166,17 @@
       <div class="box">
         <div class="row"><span>Parcheggio</span><b>€ 25,00</b></div>
         <div class="row"><span>Caparra (pre-autorizzazione)</span><b>€ 25,00</b></div>
-        <div id="info" class="hint">
-          Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.
-        </div>
+        <div id="info" class="hint">Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.</div>
       </div>
 
       <div class="btns">
-        <!-- 1️⃣ Payment link Stripe per il parcheggio -->
-        <a id="payLink" class="btn pay"
-           href="https://buy.stripe.com/fZudR97cG38119BeZh7Zu08"
-           target="_blank" rel="noopener">
+        <!-- Pagamento parcheggio -->
+        <a id="payLink" class="btn pay" href="https://buy.stripe.com/fZudR97cG38119BeZh7Zu08" target="_blank">
           💳 Paga Parcheggio 25 €
         </a>
 
-        <!-- 2️⃣ Function Netlify per la pre-autorizzazione -->
-        <a id="depositLink" class="btn deposit"
-           href="https://bar.ibimbiapartments.it/.netlify/functions/deposit"
-           target="_blank" rel="noopener">
+        <!-- Pre-autorizzazione caparra -->
+        <a id="depositLink" class="btn deposit" href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank">
           🔒 Autorizza Caparra 25 €
         </a>
       </div>
@@ -168,7 +188,7 @@
   </div>
 
   <script>
-    // Propaga i parametri ?room=..&guest=..&amount=.. al link deposit
+    // Passa parametri stanza/ospite/amount al link caparra
     (function(){
       const u = new URL(window.location.href);
       const room=u.searchParams.get('room')||'';

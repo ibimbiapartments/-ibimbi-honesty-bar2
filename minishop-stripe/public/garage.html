@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I Bimbi • Parcheggio & Caparra</title>
+  <link rel="icon" href="/logo.svg" />
+  <style>
+    :root{
+      --bg:#0b0e13;
+      --card:#131922;
+      --text:#eef1f4;
+      --muted:#9aa4b2;
+      --primary:#1e90ff;
+      --primary-hover:#187be0;
+      --success:#00b894;
+      --success-hover:#00a383;
+      --border:#1f2a3a;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Segoe UI",Roboto,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding:32px;
+    }
+    .wrap{max-width:680px;width:100%}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+    header{
+      display:flex;align-items:center;gap:14px;margin-bottom:18px;
+    }
+    header img{width:52px;height:52px;border-radius:12px;}
+    h1{font-size:24px;letter-spacing:.2px}
+    p.lead{color:var(--muted);line-height:1.6;margin:6px 0 20px}
+    .box{
+      background:#0f141c;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px 20px;
+      margin-bottom:22px;
+    }
+    .row{display:flex;justify-content:space-between;margin:6px 0;font-size:15px;}
+    .row b{color:#fff}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    .btns{display:grid;gap:12px;}
+    .btn{
+      display:inline-flex;justify-content:center;align-items:center;
+      padding:14px 18px;border-radius:12px;
+      font-weight:600;font-size:16px;text-decoration:none;
+      color:#fff;transition:.2s;
+    }
+    .btn.pay{background:var(--primary);}
+    .btn.pay:hover{background:var(--primary-hover);}
+    .btn.deposit{background:var(--success);}
+    .btn.deposit:hover{background:var(--success-hover);}
+    footer{margin-top:22px;text-align:center;font-size:12.5px;color:var(--muted);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <header>
+        <img src="/logo.svg" alt="I Bimbi logo" />
+        <div>
+          <h1>Parcheggio & Caparra Garage</h1>
+          <p class="lead">Paga il parcheggio (<b>25 €</b>) e autorizza una caparra restituibile (<b>25 €</b>) per la chiave del garage.<br>La caparra è solo un blocco fondi e si sblocca automaticamente dopo il check-out.</p>
+        </div>
+      </header>
+
+      <div class="box">
+        <div class="row"><span>Parcheggio</span><b>€ 25,00</b></div>
+        <div class="row"><span>Caparra (pre-autorizzazione)</span><b>€ 25,00</b></div>
+        <div id="info" class="hint">Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.</div>
+      </div>
+
+      <div class="btns">
+        <!-- 1️⃣ Payment link Stripe per il parcheggio -->
+        <a id="payLink" class="btn pay" href="https://buy.stripe.com/fZudR97cG38119BeZh7Zu08" target="_blank">
+          💳 Paga Parcheggio 25 €
+        </a>
+
+        <!-- 2️⃣ Function Netlify per la pre-autorizzazione -->
+        <a id="depositLink" class="btn deposit" href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank">
+          🔒 Autorizza Caparra 25 €
+        </a>
+      </div>
+
+      <footer>
+        Pagamenti sicuri con Stripe · 3D Secure automatico
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Propaga i parametri ?room=..&guest=..&amount=.. al link deposit
+    (function(){
+      const u = new URL(window.location.href);
+      const room=u.searchParams.get('room')||'';
+      const guest=u.searchParams.get('guest')||'';
+      const amount=u.searchParams.get('amount')||'25';
+      const s=u.searchParams.get('success_url')||'';
+      const c=u.searchParams.get('cancel_url')||'';
+      const info=document.getElementById('info');
+      if(room||guest){
+        info.textContent=`Autorizzazione associata a: ${room?`Stanza ${room}`:''}${room&&guest?' • ':''}${guest||''}.`;
+      }
+      const base='https://bar.ibimbiapartments.it/.netlify/functions/deposit';
+      const q=new URLSearchParams();
+      if(amount)q.set('amount',amount);
+      if(room)q.set('room',room);
+      if(guest)q.set('guest',guest);
+      if(s)q.set('success_url',s);
+      if(c)q.set('cancel_url',c);
+      document.getElementById('depositLink').href=q.toString()?`${base}?${q}`:base;
+    })();
+  </script>
+</body>
+</html>

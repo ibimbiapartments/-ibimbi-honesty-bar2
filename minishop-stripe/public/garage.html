@@ -47,13 +47,17 @@
       text-align: center;
     }
 
-    /* Logo pulito, senza badge */
-    .logo {
-      width: 2500px;
-      height: auto;
-      margin: 0 auto 20px;
-      display: block;
-    }
+ /* Logo grande, centrato, responsive */
+.logo{
+  display:block;
+  margin: 8px auto 22px;      /* centra orizzontalmente */
+  width: clamp(140px, 22vw, 220px);  /* cresce in base allo schermo */
+  height:auto;
+  max-width:100%;              /* non supera la card */
+}
+@media (max-width: 480px){
+  .logo{ width: 140px; }       /* un filo più piccolo su mobile stretto */
+}
 
     h1 {
       font-size: 26px;

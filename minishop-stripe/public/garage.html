@@ -47,18 +47,21 @@
       text-align: center;
     }
 
- /* Logo grande, centrato, responsive */
-.logo{
-  display:block;
-  margin: 8px auto 22px;      /* centra orizzontalmente */
-  width: clamp(240px, 24vw, 260px);  /* cresce in base allo schermo */
-  height:auto;
-  max-width:100%;              /* non supera la card */
-}
-@media (max-width: 480px){
-  .logo{ width: 140px; }       /* un filo più piccolo su mobile stretto */
+/* Logo grande, centrato, responsive */
+.logo {
+  display: block;
+  margin: 12px auto 28px;     /* spaziatura sopra/sotto migliorata */
+  width: clamp(180px, 22vw, 260px); /* dimensione dinamica */
+  height: auto;
+  max-width: 100%;
 }
 
+@media (max-width: 480px) {
+  .logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+}
     h1 {
       font-size: 26px;
       margin-bottom: 8px;

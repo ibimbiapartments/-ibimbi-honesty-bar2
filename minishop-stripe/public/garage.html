@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>I Bimbi • Parcheggio & Caparra</title>
+  <title>I Bimbi • Parcheggio & Deposito</title>
   <link rel="icon" href="/logo2.svg" />
   <meta name="color-scheme" content="light dark" />
   <style>
@@ -13,7 +13,6 @@
       --success:#00b894; --success-hover:#029d7f;
       --radius:20px; --shadow:0 6px 25px rgba(0,0,0,.08);
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family:"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
@@ -21,14 +20,11 @@
       min-height:100vh;display:flex;align-items:center;justify-content:center;
       padding:30px;
     }
-
     .wrap{width:100%;max-width:700px}
     .card{
       background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
       box-shadow:var(--shadow);padding:40px 28px 34px;text-align:center;position:relative;
     }
-
-    /* Switch lingua */
     .langswitch{
       position:absolute;top:16px;right:16px;display:flex;gap:6px;
     }
@@ -40,22 +36,17 @@
     .langswitch button.active{
       background:#dbeafe;border-color:#bfdbfe;color:#0b63d1;
     }
-
     .logo{
-      display:block;
-      margin:12px auto 28px;
-      width:clamp(180px,22vw,260px);
-      height:auto;
-      max-width:100%;
+      display:block;margin:12px auto 28px;
+      width:clamp(180px,22vw,260px);height:auto;max-width:100%;
     }
-
     h1{font-size:26px;margin-bottom:8px}
-    p.lead{color:var(--muted);margin:0 auto 24px;line-height:1.6;font-size:15.5px;max-width:520px}
-    .box{background:#f1f3f6;border-radius:14px;padding:18px 20px;text-align:left;margin:0 auto 28px;max-width:520px}
+    p.lead{color:var(--muted);margin:0 auto 24px;line-height:1.6;font-size:15.5px;max-width:540px}
+    .box{background:#f1f3f6;border-radius:14px;padding:18px 20px;text-align:left;margin:0 auto 28px;max-width:540px}
     .row{display:flex;justify-content:space-between;font-size:15px;margin:6px 0}
     .row b{color:#000}
     .hint{font-size:13px;color:var(--muted);margin-top:8px}
-    .btns{display:grid;gap:14px;margin:0 auto;max-width:520px}
+    .btns{display:grid;gap:14px;margin:0 auto;max-width:540px}
     .btn{
       display:inline-flex;justify-content:center;align-items:center;
       padding:14px 18px;border-radius:12px;font-weight:600;font-size:16px;text-decoration:none;
@@ -75,29 +66,36 @@
         <button id="btn-en">EN</button>
       </div>
 
-      <img src="/logo2.svg?v=2" alt="I Bimbi logo" class="logo" />
+      <img src="/logo2.svg?v=3" alt="I Bimbi logo" class="logo" />
 
-      <h1 data-i18n="title">Parcheggio & Caparra Garage</h1>
+      <h1 data-i18n="title">Parcheggio & Deposito</h1>
+
       <p class="lead" data-i18n="lead">
-        Paga il parcheggio (<b>25 €</b>) e autorizza una caparra restituibile (<b>25 €</b>) per la chiave del garage.<br>
-        La caparra è solo un blocco fondi e si sblocca automaticamente dopo il check-out.
+        Il costo del parcheggio è di <b>25 € al giorno</b>.<br><br>
+        Al momento della prenotazione ti chiediamo di effettuare il <b>pagamento anticipato dei giorni desiderati</b>.
+        Se la tua sosta è di più giorni, potrai <b>selezionare il numero di giornate direttamente in fase di pagamento</b>.<br><br>
+        Inoltre, <b>3 giorni prima dell’arrivo</b> ti verrà richiesto di <b>autorizzare un deposito di 50 €</b> a garanzia della chiave del garage.
+        Il deposito non viene addebitato ma solo “bloccato” sulla carta e <b>rilasciato automaticamente dopo il check-out</b>, salvo smarrimento della scheda di accesso.<br><br>
+        ⚠️ La prenotazione del parcheggio sarà considerata <b>confermata solo dopo il completamento del pagamento e dell’autorizzazione del deposito</b>.
       </p>
 
       <div class="box">
-        <div class="row"><span data-i18n="parking">Parcheggio</span><b>€ 25,00</b></div>
-        <div class="row"><span data-i18n="deposit">Caparra (pre-autorizzazione)</span><b>€ 25,00</b></div>
+        <div class="row"><span data-i18n="parking">Pagamento prenotazione parcheggio</span><b>€ 25,00 / giorno</b></div>
+        <div class="row"><span data-i18n="deposit">Deposito (pre-autorizzazione 3 giorni prima dell’arrivo)</span><b>€ 50,00</b></div>
         <div id="info" class="hint" data-i18n="hint">
           Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.
         </div>
       </div>
 
       <div class="btns">
-        <a id="payLink" class="btn pay" href="https://buy.stripe.com/8x214n0Oi9wp5pR7wP7Zu09" target="_blank" rel="noopener" data-i18n="btnPay">
-          💳 Paga Parcheggio 25 €
+        <a id="payLink" class="btn pay"
+           href="https://buy.stripe.com/8x214n0Oi9wp5pR7wP7Zu09" target="_blank" rel="noopener" data-i18n="btnPay">
+          💳 Paga e conferma prenotazione (25 €/giorno)
         </a>
 
-        <a id="depositLink" class="btn deposit" href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank" rel="noopener" data-i18n="btnDeposit">
-          🔒 Autorizza Caparra 25 €
+        <a id="depositLink" class="btn deposit"
+           href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank" rel="noopener" data-i18n="btnDeposit">
+          🔒 Autorizza deposito (50 €)
         </a>
       </div>
 
@@ -106,60 +104,60 @@
   </div>
 
   <script>
-    // Dizionario testi
     const I18N = {
       it: {
-        title: "Parcheggio & Caparra Garage",
-        lead: `Paga il parcheggio (<b>25 €</b>) e autorizza una caparra restituibile (<b>25 €</b>) per la chiave del garage.<br>
-               La caparra è solo un blocco fondi e si sblocca automaticamente dopo il check-out.`,
-        parking: "Parcheggio",
-        deposit: "Caparra (pre-autorizzazione)",
+        title: "Parcheggio & Deposito",
+        lead: `Il costo del parcheggio è di <b>25 € al giorno</b>.<br><br>
+               Al momento della prenotazione ti chiediamo di effettuare il <b>pagamento anticipato dei giorni desiderati</b>.
+               Se la tua sosta è di più giorni, potrai <b>selezionare il numero di giornate direttamente in fase di pagamento</b>.<br><br>
+               Inoltre, <b>3 giorni prima dell’arrivo</b> ti verrà richiesto di <b>autorizzare un deposito di 50 €</b> a garanzia della chiave del garage.
+               Il deposito non viene addebitato ma solo “bloccato” sulla carta e <b>rilasciato automaticamente dopo il check-out</b>, salvo smarrimento della scheda di accesso.<br><br>
+               ⚠️ La prenotazione del parcheggio sarà considerata <b>confermata solo dopo il completamento del pagamento e dell’autorizzazione del deposito</b>.`,
+        parking: "Pagamento prenotazione parcheggio",
+        deposit: "Deposito (pre-autorizzazione 3 giorni prima dell’arrivo)",
         hint: "Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.",
-        btnPay: "💳 Paga Parcheggio 25 €",
-        btnDeposit: "🔒 Autorizza Caparra 25 €",
+        btnPay: "💳 Paga e conferma prenotazione (25 €/giorno)",
+        btnDeposit: "🔒 Autorizza deposito (50 €)",
         foot: "Pagamenti sicuri con Stripe · 3D Secure automatico"
       },
       en: {
-        title: "Parking & Garage Deposit",
-        lead: `Pay the parking fee (<b>€25</b>) and authorize a refundable deposit (<b>€25</b>) for the garage key.<br>
-               The deposit is only a temporary hold and will be released automatically after check-out.`,
-        parking: "Parking",
-        deposit: "Deposit (pre-authorization)",
+        title: "Parking & Deposit",
+        lead: `The parking rate is <b>€25 per day</b>.<br><br>
+               At the time of booking, please <b>prepay for the desired number of days</b>.
+               If your stay covers multiple days, you can <b>select the number of days directly during checkout</b>.<br><br>
+               In addition, <b>3 days before arrival</b>, you’ll be asked to <b>authorize a €50 deposit</b> as a guarantee for the garage key.
+               This amount is not charged, but temporarily held on your card and <b>automatically released after check-out</b>, unless the access card is lost.<br><br>
+               ⚠️ Your parking reservation will be considered <b>confirmed only once both the payment and the deposit authorization have been completed</b>.`,
+        parking: "Parking reservation payment",
+        deposit: "Deposit (pre-authorization 3 days before arrival)",
         hint: "If opened from a personalized link, the room and guest will be automatically associated.",
-        btnPay: "💳 Pay Parking €25",
-        btnDeposit: "🔒 Authorize Deposit €25",
+        btnPay: "💳 Pay and confirm reservation (€25/day)",
+        btnDeposit: "🔒 Authorize deposit (€50)",
         foot: "Secure payments with Stripe · 3D Secure enabled"
       }
     };
 
-    // Parametri URL
     const u = new URL(window.location.href);
-    const room  = u.searchParams.get('room')   || '';
-    const guest = u.searchParams.get('guest')  || '';
-    const amount= u.searchParams.get('amount') || '25';
-    let lang    = (u.searchParams.get('lang') || '').toLowerCase();
+    const room=u.searchParams.get('room')||'';
+    const guest=u.searchParams.get('guest')||'';
+    const amount=u.searchParams.get('amount')||'25';
+    let lang=(u.searchParams.get('lang')||'').toLowerCase();
+    if(!lang){lang=(navigator.language||'en').toLowerCase().startsWith('it')?'it':'en';}
 
-    if (!lang) {
-      lang = (navigator.language || 'en').toLowerCase().startsWith('it') ? 'it' : 'en';
-    }
-
-    // Applica lingua
-    function setLang(l) {
-      const dict = I18N[l] || I18N.en;
-      document.documentElement.lang = l;
+    function setLang(l){
+      const dict=I18N[l]||I18N.en;
+      document.documentElement.lang=l;
       document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key = el.getAttribute('data-i18n');
+        const key=el.getAttribute('data-i18n');
         if(dict[key]){
-          if(dict[key].includes('<b>')||dict[key].includes('<br'))
-            el.innerHTML = dict[key];
-          else el.textContent = dict[key];
+          if(dict[key].includes('<b>')||dict[key].includes('<br')) el.innerHTML=dict[key];
+          else el.textContent=dict[key];
         }
       });
       document.getElementById('btn-it').classList.toggle('active',l==='it');
       document.getElementById('btn-en').classList.toggle('active',l==='en');
     }
 
-    // Costruisci link caparra
     (function(){
       const base='https://bar.ibimbiapartments.it/.netlify/functions/deposit';
       const q=new URLSearchParams();
@@ -175,18 +173,10 @@
       }
     })();
 
-    // Attiva lingua
     setLang(lang);
-
-    // Toggle manuale
     document.getElementById('btn-it').onclick=()=>{setLang('it');history.replaceState(null,'',updateQS('lang','it'));};
     document.getElementById('btn-en').onclick=()=>{setLang('en');history.replaceState(null,'',updateQS('lang','en'));};
-
-    function updateQS(key,val){
-      const url=new URL(window.location.href);
-      url.searchParams.set(key,val);
-      return url.toString();
-    }
+    function updateQS(key,val){const url=new URL(window.location.href);url.searchParams.set(key,val);return url.toString();}
   </script>
 </body>
 </html>

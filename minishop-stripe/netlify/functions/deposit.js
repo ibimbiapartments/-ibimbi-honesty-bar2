@@ -8,11 +8,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 export async function handler(event) {
   try {
     const qs = event.queryStringParameters || {};
-    const amountEur = Number(qs.amount) > 0 ? Number(qs.amount) : 25;
-    const unit_amount = Math.round(amountEur * 100);
+
+    // 🔒 Importo fisso: 50 € (pre-autorizzazione deposito)
+    const amountEur = 50;
+    const unit_amount = 5000; // 50.00 EUR
+
     const room = qs.room || "";
     const guest = qs.guest || "";
 
+    // Pagine di ritorno (personalizzabili)
     const success_url = qs.success_url || "https://bar.ibimbiapartments.it/thanks-deposit";
     const cancel_url  = qs.cancel_url  || "https://bar.ibimbiapartments.it/cancel";
 
@@ -22,13 +26,14 @@ export async function handler(event) {
         price_data: {
           currency: "eur",
           product_data: {
-            name: "Caparra Garage (chiave/scheda)",
+            name: "Deposito garage (chiave/scheda)",
             description: room ? `Camera/Stanza: ${room}` : undefined,
           },
-          unit_amount,
+          unit_amount, // 50 €
         },
         quantity: 1,
       }],
+      // Pre-autorizzazione: fondi “bloccati”, da catturare solo in caso di smarrimento
       payment_intent_data: {
         capture_method: "manual",
         metadata: { type: "deposito-garage", room, guest, amount_eur: String(amountEur) },
@@ -38,6 +43,7 @@ export async function handler(event) {
       payment_method_options: { card: { request_three_d_secure: "automatic" } },
     });
 
+    // Redirect a Stripe Checkout
     return { statusCode: 303, headers: { Location: session.url }, body: "" };
   } catch (err) {
     console.error("deposit function error:", err);

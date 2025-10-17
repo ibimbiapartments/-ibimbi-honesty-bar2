@@ -8,199 +8,185 @@
   <meta name="color-scheme" content="light dark" />
   <style>
     :root {
-      --bg: #f7f8fa;             /* sfondo pagina */
-      --card: #ffffff;           /* card principale */
-      --text: #1b1e23;           /* testo principale */
-      --muted: #6b7280;          /* testo secondario */
-      --border: #e0e4ea;         /* bordo card */
-      --primary: #1e90ff;        /* blu pulsante */
-      --primary-hover: #1879da;
-      --success: #00b894;        /* verde pulsante */
-      --success-hover: #029d7f;
-      --radius: 20px;
-      --shadow: 0 6px 25px rgba(0,0,0,.08);
+      --bg:#f7f8fa; --card:#ffffff; --text:#1b1e23; --muted:#6b7280; --border:#e0e4ea;
+      --primary:#1e90ff; --primary-hover:#1879da;
+      --success:#00b894; --success-hover:#029d7f;
+      --radius:20px; --shadow:0 6px 25px rgba(0,0,0,.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 30px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+      background:var(--bg);color:var(--text);
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      padding:30px;
     }
 
-    .wrap {
-      width: 100%;
-      max-width: 700px;
+    .wrap{width:100%;max-width:700px}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:40px 28px 34px;text-align:center;position:relative;
     }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 40px 28px 34px;
-      text-align: center;
+    /* Switch lingua */
+    .langswitch{
+      position:absolute;top:16px;right:16px;display:flex;gap:6px;
+    }
+    .langswitch button{
+      border:1px solid var(--border);background:#eef2f6;
+      border-radius:10px;padding:5px 10px;cursor:pointer;font-weight:600;
+      font-size:13px;color:#333;transition:all .2s ease;
+    }
+    .langswitch button.active{
+      background:#dbeafe;border-color:#bfdbfe;color:#0b63d1;
     }
 
-/* Logo grande, centrato, responsive */
-.logo {
-  display: block;
-  margin: 12px auto 28px;     /* spaziatura sopra/sotto migliorata */
-  width: clamp(180px, 22vw, 260px); /* dimensione dinamica */
-  height: auto;
-  max-width: 100%;
-}
-
-@media (max-width: 480px) {
-  .logo {
-    width: 150px;
-    margin-bottom: 20px;
-  }
-}
-    h1 {
-      font-size: 26px;
-      margin-bottom: 8px;
-      color: var(--text);
+    .logo{
+      display:block;
+      margin:12px auto 28px;
+      width:clamp(180px,22vw,260px);
+      height:auto;
+      max-width:100%;
     }
 
-    p.lead {
-      color: var(--muted);
-      margin: 0 auto 24px;
-      line-height: 1.6;
-      font-size: 15.5px;
-      max-width: 520px;
+    h1{font-size:26px;margin-bottom:8px}
+    p.lead{color:var(--muted);margin:0 auto 24px;line-height:1.6;font-size:15.5px;max-width:520px}
+    .box{background:#f1f3f6;border-radius:14px;padding:18px 20px;text-align:left;margin:0 auto 28px;max-width:520px}
+    .row{display:flex;justify-content:space-between;font-size:15px;margin:6px 0}
+    .row b{color:#000}
+    .hint{font-size:13px;color:var(--muted);margin-top:8px}
+    .btns{display:grid;gap:14px;margin:0 auto;max-width:520px}
+    .btn{
+      display:inline-flex;justify-content:center;align-items:center;
+      padding:14px 18px;border-radius:12px;font-weight:600;font-size:16px;text-decoration:none;
+      color:#fff;transition:all .2s ease;
     }
-
-    .box {
-      background: #f1f3f6;
-      border-radius: 14px;
-      padding: 18px 20px;
-      text-align: left;
-      margin: 0 auto 28px;
-      max-width: 520px;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 15px;
-      margin: 6px 0;
-    }
-
-    .row b { color: #000; }
-    .hint { font-size: 13px; color: var(--muted); margin-top: 8px; }
-
-    .btns {
-      display: grid;
-      gap: 14px;
-      margin: 0 auto;
-      max-width: 520px;
-    }
-
-    .btn {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      padding: 14px 18px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 16px;
-      text-decoration: none;
-      color: #fff;
-      transition: all .2s ease;
-    }
-
-    .btn.pay {
-      background: var(--primary);
-    }
-
-    .btn.pay:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn.deposit {
-      background: var(--success);
-    }
-
-    .btn.deposit:hover {
-      background: var(--success-hover);
-      transform: translateY(-1px);
-    }
-
-    footer {
-      margin-top: 28px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    @media (min-width: 720px) {
-      .btns { grid-template-columns: 1fr 1fr; }
-    }
+    .btn.pay{background:var(--primary)} .btn.pay:hover{background:var(--primary-hover);transform:translateY(-1px)}
+    .btn.deposit{background:var(--success)} .btn.deposit:hover{background:var(--success-hover);transform:translateY(-1px)}
+    footer{margin-top:28px;font-size:13px;color:var(--muted)}
+    @media (min-width:720px){.btns{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <img src="/logo2.svg" alt="I Bimbi logo" class="logo" />
+      <div class="langswitch">
+        <button id="btn-it">IT</button>
+        <button id="btn-en">EN</button>
+      </div>
 
-      <h1>Parcheggio & Caparra Garage</h1>
-      <p class="lead">
+      <img src="/logo2.svg?v=2" alt="I Bimbi logo" class="logo" />
+
+      <h1 data-i18n="title">Parcheggio & Caparra Garage</h1>
+      <p class="lead" data-i18n="lead">
         Paga il parcheggio (<b>25 €</b>) e autorizza una caparra restituibile (<b>25 €</b>) per la chiave del garage.<br>
         La caparra è solo un blocco fondi e si sblocca automaticamente dopo il check-out.
       </p>
 
       <div class="box">
-        <div class="row"><span>Parcheggio</span><b>€ 25,00</b></div>
-        <div class="row"><span>Caparra (pre-autorizzazione)</span><b>€ 25,00</b></div>
-        <div id="info" class="hint">Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.</div>
+        <div class="row"><span data-i18n="parking">Parcheggio</span><b>€ 25,00</b></div>
+        <div class="row"><span data-i18n="deposit">Caparra (pre-autorizzazione)</span><b>€ 25,00</b></div>
+        <div id="info" class="hint" data-i18n="hint">
+          Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.
+        </div>
       </div>
 
       <div class="btns">
-        <!-- Pagamento parcheggio -->
-        <a id="payLink" class="btn pay" href="https://buy.stripe.com/fZudR97cG38119BeZh7Zu08" target="_blank">
+        <a id="payLink" class="btn pay" href="https://buy.stripe.com/fZudR97cG38119BeZh7Zu08" target="_blank" rel="noopener" data-i18n="btnPay">
           💳 Paga Parcheggio 25 €
         </a>
 
-        <!-- Pre-autorizzazione caparra -->
-        <a id="depositLink" class="btn deposit" href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank">
+        <a id="depositLink" class="btn deposit" href="https://bar.ibimbiapartments.it/.netlify/functions/deposit" target="_blank" rel="noopener" data-i18n="btnDeposit">
           🔒 Autorizza Caparra 25 €
         </a>
       </div>
 
-      <footer>
-        Pagamenti sicuri con Stripe · 3D Secure automatico
-      </footer>
+      <footer data-i18n="foot">Pagamenti sicuri con Stripe · 3D Secure automatico</footer>
     </div>
   </div>
 
   <script>
-    // Passa parametri stanza/ospite/amount al link caparra
-    (function(){
-      const u = new URL(window.location.href);
-      const room=u.searchParams.get('room')||'';
-      const guest=u.searchParams.get('guest')||'';
-      const amount=u.searchParams.get('amount')||'25';
-      const s=u.searchParams.get('success_url')||'';
-      const c=u.searchParams.get('cancel_url')||'';
-      const info=document.getElementById('info');
-      if(room||guest){
-        info.textContent=`Autorizzazione associata a: ${room?`Stanza ${room}`:''}${room&&guest?' • ':''}${guest||''}.`;
+    // Dizionario testi
+    const I18N = {
+      it: {
+        title: "Parcheggio & Caparra Garage",
+        lead: `Paga il parcheggio (<b>25 €</b>) e autorizza una caparra restituibile (<b>25 €</b>) per la chiave del garage.<br>
+               La caparra è solo un blocco fondi e si sblocca automaticamente dopo il check-out.`,
+        parking: "Parcheggio",
+        deposit: "Caparra (pre-autorizzazione)",
+        hint: "Aprendo da un link personalizzato, la stanza e l’ospite verranno associati automaticamente.",
+        btnPay: "💳 Paga Parcheggio 25 €",
+        btnDeposit: "🔒 Autorizza Caparra 25 €",
+        foot: "Pagamenti sicuri con Stripe · 3D Secure automatico"
+      },
+      en: {
+        title: "Parking & Garage Deposit",
+        lead: `Pay the parking fee (<b>€25</b>) and authorize a refundable deposit (<b>€25</b>) for the garage key.<br>
+               The deposit is only a temporary hold and will be released automatically after check-out.`,
+        parking: "Parking",
+        deposit: "Deposit (pre-authorization)",
+        hint: "If opened from a personalized link, the room and guest will be automatically associated.",
+        btnPay: "💳 Pay Parking €25",
+        btnDeposit: "🔒 Authorize Deposit €25",
+        foot: "Secure payments with Stripe · 3D Secure enabled"
       }
+    };
+
+    // Parametri URL
+    const u = new URL(window.location.href);
+    const room  = u.searchParams.get('room')   || '';
+    const guest = u.searchParams.get('guest')  || '';
+    const amount= u.searchParams.get('amount') || '25';
+    let lang    = (u.searchParams.get('lang') || '').toLowerCase();
+
+    if (!lang) {
+      lang = (navigator.language || 'en').toLowerCase().startsWith('it') ? 'it' : 'en';
+    }
+
+    // Applica lingua
+    function setLang(l) {
+      const dict = I18N[l] || I18N.en;
+      document.documentElement.lang = l;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(dict[key]){
+          if(dict[key].includes('<b>')||dict[key].includes('<br'))
+            el.innerHTML = dict[key];
+          else el.textContent = dict[key];
+        }
+      });
+      document.getElementById('btn-it').classList.toggle('active',l==='it');
+      document.getElementById('btn-en').classList.toggle('active',l==='en');
+    }
+
+    // Costruisci link caparra
+    (function(){
       const base='https://bar.ibimbiapartments.it/.netlify/functions/deposit';
       const q=new URLSearchParams();
       if(amount)q.set('amount',amount);
       if(room)q.set('room',room);
       if(guest)q.set('guest',guest);
-      if(s)q.set('success_url',s);
-      if(c)q.set('cancel_url',c);
-      document.getElementById('depositLink').href=q.toString()?`${base}?${q}`:base;
+      document.getElementById('depositLink').href=`${base}?${q}`;
+      const info=document.getElementById('info');
+      if(room||guest){
+        info.textContent=(lang==='it')
+          ? `Autorizzazione associata a: ${room?`Stanza ${room}`:''}${room&&guest?' • ':''}${guest||''}.`
+          : `Authorization linked to: ${room?`Room ${room}`:''}${room&&guest?' • ':''}${guest||''}.`;
+      }
     })();
+
+    // Attiva lingua
+    setLang(lang);
+
+    // Toggle manuale
+    document.getElementById('btn-it').onclick=()=>{setLang('it');history.replaceState(null,'',updateQS('lang','it'));};
+    document.getElementById('btn-en').onclick=()=>{setLang('en');history.replaceState(null,'',updateQS('lang','en'));};
+
+    function updateQS(key,val){
+      const url=new URL(window.location.href);
+      url.searchParams.set(key,val);
+      return url.toString();
+    }
   </script>
 </body>
 </html>

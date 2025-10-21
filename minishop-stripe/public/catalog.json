@@ -22,5 +22,13 @@
     "currency": "EUR",
     "image": "succo.jpg",
     "description": "Vari gusti  / Different flavors"
-  }
+  },
+  {
+  "price": "price_1SKdgPHbLwIGRC3KQ90jJIrg", 
+  "name": "Caffè - Capsule Nespresso",
+  "unit_amount": 100,
+  "currency": "EUR",
+  "image": "capsule.jpg",
+  "description": "Capsula Nespresso - 1 cialda"
+}
 ]

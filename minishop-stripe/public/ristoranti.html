@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I Bimbi Guesthouse – Ristoranti Consigliati</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #edf2f7;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 16px 60px;
+      color: #1a202c;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 680px;
+      padding: 36px 36px 40px;
+      position: relative;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 4px;
+    }
+    .lang-toggle button {
+      border: 1.5px solid #cbd5e0;
+      background: transparent;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #718096;
+      transition: all 0.15s;
+    }
+    .lang-toggle button.active {
+      background: #1a202c;
+      color: #fff;
+      border-color: #1a202c;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 28px;
+      margin-top: 4px;
+    }
+    .logo img {
+      height: 72px;
+      width: auto;
+    }
+
+    /* Page title */
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 6px;
+      color: #1a202c;
+    }
+    .subtitle {
+      text-align: center;
+      color: #718096;
+      font-size: 14px;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* Restaurant list */
+    .restaurant-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Restaurant card */
+    .restaurant-item {
+      background: #f7fafc;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .restaurant-item:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+
+    /* Photo */
+    .restaurant-photo {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background-color: #cbd5e0;
+    }
+
+    /* Content */
+    .restaurant-content {
+      padding: 14px 16px 16px;
+      border-left: 4px solid #5a8a6a;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .restaurant-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a202c;
+      line-height: 1.3;
+    }
+
+    .restaurant-note {
+      font-size: 13px;
+      color: #4a5568;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .restaurant-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .restaurant-address {
+      font-size: 12px;
+      color: #a0aec0;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .maps-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #4299e1;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .maps-btn:hover { background: #2b6cb0; }
+    .maps-btn svg { width: 14px; height: 14px; }
+
+    /* Footer note */
+    .page-footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 12px;
+      color: #a0aec0;
+    }
+
+    /* Multilingual */
+    [data-lang] { display: none; }
+    .lang-it [data-lang="it"],
+    .lang-en [data-lang="en"] { display: block; }
+  </style>
+</head>
+<body>
+<div class="card lang-it" id="main-card">
+
+  <!-- Language toggle -->
+  <div class="lang-toggle">
+    <button class="active" id="btn-it" onclick="setLang('it')">IT</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <!-- Logo -->
+  <div class="logo">
+    <img
+      src="https://raw.githubusercontent.com/ibimbiapartments/-ibimbi-honesty-bar2/main/minishop-stripe/public/logo.svg"
+      alt="I Bimbi Guesthouse"
+      onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';"
+    />
+    <!-- Fallback se il logo non carica -->
+    <div id="logo-fallback" style="display:none; flex-direction:column; align-items:center;">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;margin-bottom:6px;">
+        <path d="M40 8 L72 36 L72 72 L8 72 L8 36 Z" stroke="#5a8a6a" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <path d="M8 36 L40 8 L72 36" stroke="#5a8a6a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="30" cy="47" r="5" stroke="#5a8a6a" stroke-width="2.5" fill="none"/>
+        <path d="M24 68 Q30 57 36 68" stroke="#5a8a6a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="50" cy="47" r="5" stroke="#5a8a6a" stroke-width="2.5" fill="none"/>
+        <path d="M44 68 Q50 57 56 68" stroke="#5a8a6a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div style="font-size:20px;font-weight:700;color:#5a8a6a;letter-spacing:.04em;">I BIMBI</div>
+      <div style="font-size:11px;letter-spacing:.18em;color:#5a8a6a;font-weight:500;text-transform:uppercase;">Guesthouse</div>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h1>
+    <span data-lang="it">🍽️ Ristoranti Consigliati</span>
+    <span data-lang="en">🍽️ Our Restaurant Recommendations</span>
+  </h1>
+  <p class="subtitle">
+    <span data-lang="it">Una selezione personale dei nostri posti preferiti a Livorno.<br>Buon appetito!</span>
+    <span data-lang="en">A personal selection of our favourite spots in Livorno.<br>Enjoy your meal!</span>
+  </p>
+
+  <!-- Restaurants -->
+  <div class="restaurant-list">
+
+    <!-- 1. L'Amo -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=680&h=180"
+        alt="L'Amo Ristorante di Pesce"
+        onerror="this.style.background='linear-gradient(135deg,#4facfe,#00f2fe)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">L'Amo Ristorante di Pesce</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Ristorante di pesce, location cozy!!</span>
+          <span data-lang="en">Fish restaurant with a cozy atmosphere!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Piazza del Luogo Pio, 8 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/kvhoUiv6q4unAY14A" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Baracchina Bianca -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=680&h=180"
+        alt="Caffetteria Baracchina Bianca"
+        onerror="this.style.background='linear-gradient(135deg,#43e97b,#38f9d7)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Caffetteria Baracchina Bianca</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Aperitivi e spuntino vista mare!!</span>
+          <span data-lang="en">Aperitifs and snacks with a sea view!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Piazza S. Jacopo in Acquaviva, 19 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/7jCb86ezdGCp4CWg7" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Manalù -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=680&h=180"
+        alt="Manalù Bistrot"
+        onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Manalù – Bistrot &amp; Bakery Lab</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Total gluten-free!!</span>
+          <span data-lang="en">Completely gluten-free!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">P.za Elia Benamozegh, 15 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/7T5QTpAMEQQU3Uwp8" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Cantina Nardi -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=680&h=180"
+        alt="Cantina Nardi"
+        onerror="this.style.background='linear-gradient(135deg,#a18cd1,#fbc2eb)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Ristorante Enoteca Cantina Nardi</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Ottimo a pranzo e come enoteca.</span>
+          <span data-lang="en">Great for lunch and as a wine bar.</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Via Leonardo Cambini, 6/8 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/KCp2crKw1RmyAfLg6" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Da Gagarin -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=680&h=180"
+        alt="Da Gagarin"
+        onerror="this.style.background='linear-gradient(135deg,#ffecd2,#fcb69f)';this.style.opacity='.6';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Da Gagarin – Torta di Ceci</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Torta N1… la torta di ceci, tipico street food di Livorno!!!</span>
+          <span data-lang="en">The #1 spot for Torta di ceci — the iconic Livorno street food!!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Via del Cardinale, 24 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/19pyQZTMjWmX87bF8" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Chez Ugo -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=680&h=180"
+        alt="Chez Ugo Pizzeria"
+        onerror="this.style.background='linear-gradient(135deg,#f7971e,#ffd200)';this.style.opacity='.5';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Chez Ugo Pizzeria</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Pizza leggera, vasta scelta, certificata per celiaci!! Non si sbaglia mai!!</span>
+          <span data-lang="en">Light pizza, great variety, certified gluten-free options!! Never disappoints!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Scali del Monte Pio, 35 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/PKFmCFC9HkHGRLoRA" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. BorgoCarniDOC -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1544025162-d76538a9b8d5?auto=format&fit=crop&w=680&h=180"
+        alt="BorgoCarniDOC"
+        onerror="this.style.background='linear-gradient(135deg,#c94b4b,#4b134f)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Ristomacelleria BorgoCarniDOC</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Validissimo per ottima carne!! Prezzi onesti!!</span>
+          <span data-lang="en">Excellent meat dishes at honest prices!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Borgo dei Cappuccini, 230 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/TD82RcBuJ3s57H9K9" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Incarne -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=680&h=180"
+        alt="Incarne Ristorante Macelleria"
+        onerror="this.style.background='linear-gradient(135deg,#8e2de2,#4a00e0)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Incarne – Ristorante Macelleria</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Steakhouse.</span>
+          <span data-lang="en">Steakhouse.</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Scali del Monte Pio, 11 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/yNe8xXb4HCm1CGZZ7" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Trattoria Da Galileo -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=680&h=180"
+        alt="Trattoria Da Galileo"
+        onerror="this.style.background='linear-gradient(135deg,#0f2027,#203a43,#2c5364)';this.style.opacity='.5';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Trattoria Da Galileo</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Cacciucco!! (il brodetto di pesce tipico di Livorno)</span>
+          <span data-lang="en">Cacciucco!! (the iconic Livorno fish stew – a must try!)</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Via della Campana, 20 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/yVquBSs2wfP1UArS9" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Azzighe -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=680&h=180"
+        alt="Azzighe Osteria"
+        onerror="this.style.background='linear-gradient(135deg,#56ab2f,#a8e063)';this.style.opacity='.4';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Azzighe – Osteria a metà</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Cucina tipica ma con stile, da provare!!</span>
+          <span data-lang="en">Traditional cuisine with a twist — a must try!!</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Scali del Pontino, 19 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/4ZvNxzQpCgFRTHj5A" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Ristorante Oscar -->
+    <div class="restaurant-item">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=680&h=180"
+        alt="Ristorante Oscar"
+        onerror="this.style.background='linear-gradient(135deg,#1a6dab,#c1dfc4)';this.style.opacity='.5';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content">
+        <div class="restaurant-name">Ristorante Oscar</div>
+        <div class="restaurant-note">
+          <span data-lang="it">Migliore in città per pesce e crostacei.</span>
+          <span data-lang="en">Best in town for fish and seafood.</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Via Oreste Franchini, 78 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/c7waFhntaDYg9VSx7" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <p class="page-footer">I Bimbi Guesthouse · Livorno</p>
+
+</div>
+
+<script>
+  function setLang(lang) {
+    const card = document.getElementById('main-card');
+    card.className = 'card lang-' + lang;
+    document.getElementById('btn-it').classList.toggle('active', lang === 'it');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  }
+  setLang('it');
+</script>
+</body>
+</html>

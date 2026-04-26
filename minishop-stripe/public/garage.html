@@ -268,54 +268,59 @@
       });
     }
 
-    async function renderCalendar() {
-      const dict = I18N[lang];
-      document.getElementById('calMonthYear').textContent = `${dict.months[viewMonth]} ${viewYear}`;
+async function renderCalendar() {
+  const dict = I18N[lang];
+  document.getElementById('calMonthYear').textContent = `${dict.months[viewMonth]} ${viewYear}`;
 
-      const dayNamesEl = document.getElementById('calDayNames');
-      dayNamesEl.innerHTML = dict.days.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+  const dayNamesEl = document.getElementById('calDayNames');
+  dayNamesEl.innerHTML = dict.days.map(d => `<div class="cal-day-name">${d}</div>`).join('');
 
-      const daysEl = document.getElementById('calDays');
-      daysEl.innerHTML = '';
+  const daysEl = document.getElementById('calDays');
+  daysEl.innerHTML = '';
 
-      const firstDay = new Date(viewYear, viewMonth, 1).getDay();
-      const offset = firstDay === 0 ? 6 : firstDay - 1;
-      const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-      const today = new Date(); today.setHours(0,0,0,0);
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const offset = firstDay === 0 ? 6 : firstDay - 1;
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
 
-      for (let i = 0; i < offset; i++) {
-        const empty = document.createElement('div');
-        empty.className = 'cal-day empty';
-        daysEl.appendChild(empty);
-      }
+  for (let i = 0; i < offset; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    daysEl.appendChild(empty);
+  }
 
-      for (let d = 1; d <= daysInMonth; d++) {
-        const dateStr = toDateStr(viewYear, viewMonth, d);
-        const dayDate = new Date(viewYear, viewMonth, d);
-        const el = document.createElement('div');
-        el.textContent = d;
+  // Prima raccogliamo tutte le date del mese
+  const days = [];
+  for (let d = 1; d <= daysInMonth; d++) {
+    days.push({ d, dateStr: toDateStr(viewYear, viewMonth, d), dayDate: new Date(viewYear, viewMonth, d) });
+  }
 
-        if (dayDate < today) {
-          el.className = 'cal-day past';
-        } else if (dateStr === selectedDateStr) {
-          el.className = 'cal-day selected';
-        } else {
-          el.className = 'cal-day loading';
-          (async () => {
-            const available = await checkAvailability(dateStr);
-            if (dateStr === selectedDateStr) {
-              el.className = 'cal-day selected';
-            } else if (available === false) {
-              el.className = 'cal-day booked';
-            } else {
-              el.className = 'cal-day available';
-              el.onclick = () => selectDate(dateStr);
-            }
-          })();
-        }
-        daysEl.appendChild(el);
-      }
+  // Poi carichiamo disponibilità in parallelo
+  const results = await Promise.all(
+    days.map(({ dateStr, dayDate }) => {
+      if (dayDate < today) return Promise.resolve(null);
+      return checkAvailability(dateStr);
+    })
+  );
+
+  // Poi rendiamo tutto in una volta
+  days.forEach(({ d, dateStr, dayDate }, i) => {
+    const el = document.createElement('div');
+    el.textContent = d;
+
+    if (dayDate < today) {
+      el.className = 'cal-day past';
+    } else if (dateStr === selectedDateStr) {
+      el.className = 'cal-day selected';
+    } else if (results[i] === false) {
+      el.className = 'cal-day booked';
+    } else {
+      el.className = 'cal-day available';
+      el.onclick = () => selectDate(dateStr);
     }
+    daysEl.appendChild(el);
+  });
+}
 
     function selectDate(dateStr) {
       selectedDateStr = dateStr;

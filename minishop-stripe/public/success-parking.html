@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>I Bimbi • Prenotazione Confermata</title>
+  <link rel="icon" href="/logo2.svg" />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root {
+      --bg:#f7f8fa; --card:#ffffff; --text:#1b1e23; --muted:#6b7280; --border:#e0e4ea;
+      --primary:#1e90ff;
+      --success:#00b894; --success-light:#d4f5ed;
+      --radius:20px; --shadow:0 6px 25px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:"Segoe UI",Roboto,system-ui,-apple-system,sans-serif;
+      background:var(--bg);color:var(--text);
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      padding:30px;
+    }
+    .wrap{width:100%;max-width:600px}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:48px 32px 40px;text-align:center;
+    }
+    .langswitch{display:flex;justify-content:flex-end;margin-bottom:20px;gap:6px;}
+    .langswitch button{
+      border:1px solid var(--border);background:#eef2f6;
+      border-radius:10px;padding:5px 10px;cursor:pointer;font-weight:600;
+      font-size:13px;color:#333;transition:all .2s ease;
+    }
+    .langswitch button.active{background:#dbeafe;border-color:#bfdbfe;color:#0b63d1;}
+    .logo{display:block;margin:0 auto 32px;width:clamp(160px,20vw,240px);height:auto;}
+    .check-circle{
+      width:72px;height:72px;border-radius:50%;
+      background:var(--success-light);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 24px;
+    }
+    .check-circle svg{width:36px;height:36px;}
+    h1{font-size:24px;font-weight:700;margin-bottom:10px;color:var(--text);}
+    .subtitle{font-size:15.5px;color:var(--muted);margin-bottom:32px;line-height:1.6;white-space:pre-line;}
+    .date-box{
+      background:var(--success-light);border-radius:14px;
+      padding:16px 24px;margin:0 auto 28px;max-width:420px;
+      display:none;
+    }
+    .date-box .label{font-size:13px;color:#047857;margin-bottom:4px;}
+    .date-box .date{font-size:20px;font-weight:700;color:#065f46;}
+    .info-box{
+      background:#f1f3f6;border-radius:14px;padding:20px 24px;
+      text-align:left;margin:0 auto 28px;max-width:420px;
+    }
+    .info-box p{font-size:14.5px;color:var(--muted);line-height:1.7;}
+    .info-box p+p{margin-top:12px;}
+    .info-box b{color:var(--text);}
+    .btn-contact{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:13px 28px;border-radius:12px;font-weight:600;font-size:15px;
+      text-decoration:none;color:#fff;background:var(--primary);
+      transition:all .2s ease;
+    }
+    .btn-contact:hover{background:#1879da;transform:translateY(-1px);}
+    footer{margin-top:28px;font-size:13px;color:var(--muted);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="langswitch">
+        <button id="btn-it">IT</button>
+        <button id="btn-en">EN</button>
+      </div>
+
+      <img src="/logo2.svg?v=3" alt="I Bimbi Guesthouse" class="logo" />
+
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00b894" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <h1 id="title"></h1>
+      <p class="subtitle" id="subtitle"></p>
+
+      <div class="date-box" id="dateBox">
+        <div class="label" id="dateLabel"></div>
+        <div class="date" id="dateDisplay"></div>
+      </div>
+
+      <div class="info-box">
+        <p id="info1"></p>
+        <p id="info2"></p>
+      </div>
+
+      <a href="https://www.ibimbiapartments.it/contact" class="btn-contact" id="btnContact"></a>
+
+      <footer id="foot"></footer>
+    </div>
+  </div>
+
+  <script>
+    const I18N = {
+      it: {
+        title: "Prenotazione confermata!",
+        subtitle: "Il pagamento è andato a buon fine.\nIl tuo posto auto è riservato per la data selezionata.",
+        dateLabel: "Data prenotata",
+        info1: "🔑 <b>Accesso al parcheggio:</b> le istruzioni per accedere al garage ti verranno fornite al completamento del processo di check-in.",
+        info2: "📩 <b>Problemi o domande?</b> Contattaci attraverso la nostra pagina dedicata — ti risponderemo il prima possibile.",
+        btnContact: "Contattaci",
+        foot: "I Bimbi Guesthouse · Pagamento elaborato in sicurezza da Stripe",
+        months: ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre']
+      },
+      en: {
+        title: "Booking confirmed!",
+        subtitle: "Your payment was successful.\nYour parking spot is reserved for the selected date.",
+        dateLabel: "Booked date",
+        info1: "🔑 <b>Parking access:</b> instructions to access the garage will be provided upon completion of your check-in process.",
+        info2: "📩 <b>Questions or issues?</b> Reach out through our contact page — we'll get back to you as soon as possible.",
+        btnContact: "Contact us",
+        foot: "I Bimbi Guesthouse · Payment securely processed by Stripe",
+        months: ['January','February','March','April','May','June','July','August','September','October','November','December']
+      }
+    };
+
+    const u = new URL(window.location.href);
+    const date = u.searchParams.get('date');
+    let lang = (u.searchParams.get('lang') || '').toLowerCase();
+    if (!lang) { lang = (navigator.language || 'en').toLowerCase().startsWith('it') ? 'it' : 'en'; }
+
+    function setLang(l) {
+      const d = I18N[l];
+      document.documentElement.lang = l;
+      document.getElementById('title').textContent = d.title;
+      document.getElementById('subtitle').textContent = d.subtitle;
+      document.getElementById('dateLabel').textContent = d.dateLabel;
+      document.getElementById('info1').innerHTML = d.info1;
+      document.getElementById('info2').innerHTML = d.info2;
+      document.getElementById('btnContact').textContent = d.btnContact;
+      document.getElementById('foot').textContent = d.foot;
+      document.getElementById('btn-it').classList.toggle('active', l === 'it');
+      document.getElementById('btn-en').classList.toggle('active', l === 'en');
+
+      if (date) {
+        const [y, m, day] = date.split('-');
+        document.getElementById('dateDisplay').textContent = `${parseInt(day)} ${d.months[parseInt(m)-1]} ${y}`;
+        document.getElementById('dateBox').style.display = 'block';
+      }
+    }
+
+    document.getElementById('btn-it').onclick = () => { lang='it'; setLang('it'); history.replaceState(null,'',updateQS('lang','it')); };
+    document.getElementById('btn-en').onclick = () => { lang='en'; setLang('en'); history.replaceState(null,'',updateQS('lang','en')); };
+    function updateQS(key,val){ const url=new URL(window.location.href); url.searchParams.set(key,val); return url.toString(); }
+
+    setLang(lang);
+  </script>
+</body>
+</html>

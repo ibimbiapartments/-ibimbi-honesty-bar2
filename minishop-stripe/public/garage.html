@@ -232,40 +232,23 @@ const APPS_SCRIPT_URL = '/api/parking';
     }
 
     // JSONP - risolve il problema CORS con Apps Script
-    function checkAvailability(dateStr) {
-      if (availabilityCache[dateStr] !== undefined)
-        return Promise.resolve(availabilityCache[dateStr]);
 
-      return new Promise((resolve) => {
-        const cbName = 'cb_' + dateStr.replace(/-/g, '');
-        window[cbName] = (data) => {
-          availabilityCache[dateStr] = data.available;
-          delete window[cbName];
-          document.getElementById(cbName) && document.getElementById(cbName).remove();
-          resolve(data.available);
-        };
-        const script = document.createElement('script');
-        script.id = cbName;
-        script.src = `${APPS_SCRIPT_URL}?action=check&date=${dateStr}&callback=${cbName}`;
-        document.body.appendChild(script);
-      });
-    }
+    async function checkAvailability(dateStr) {
+  if (availabilityCache[dateStr] !== undefined)
+    return availabilityCache[dateStr];
+  try {
+    const res = await fetch(`${APPS_SCRIPT_URL}?action=check&date=${dateStr}`);
+    const data = await res.json();
+    availabilityCache[dateStr] = data.available;
+    return data.available;
+  } catch(e) { return null; }
+}
 
     // JSONP per il pagamento
-    function requestPayUrl(dateStr) {
-      return new Promise((resolve) => {
-        const cbName = 'pay_' + dateStr.replace(/-/g, '');
-        window[cbName] = (data) => {
-          delete window[cbName];
-          document.getElementById(cbName) && document.getElementById(cbName).remove();
-          resolve(data);
-        };
-        const script = document.createElement('script');
-        script.id = cbName;
-        script.src = `${APPS_SCRIPT_URL}?action=pay&date=${dateStr}&callback=${cbName}`;
-        document.body.appendChild(script);
-      });
-    }
+async function requestPayUrl(dateStr) {
+  const res = await fetch(`${APPS_SCRIPT_URL}?action=pay&date=${dateStr}`);
+  return await res.json();
+}
 
 async function renderCalendar() {
   const dict = I18N[lang];

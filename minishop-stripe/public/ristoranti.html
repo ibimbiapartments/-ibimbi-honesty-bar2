@@ -164,6 +164,38 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+    /* Tabs stile Chrome */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: -1px;
+      padding: 0 2px;
+    }
+    .tab-btn {
+      background: #edf2f7;
+      border: 1px solid #e2e8f0;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      padding: 9px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn.active {
+      background: #fff;
+      color: #1a202c;
+      border-color: #e2e8f0;
+      position: relative;
+      z-index: 1;
+    }
+    .tab-btn:hover:not(.active) { background: #e2e8f0; }
+    .tab-content-area {
+      border: 1px solid #e2e8f0;
+      border-radius: 0 12px 12px 12px;
+      padding: 24px 0 0;
+    }
     /* Footer note */
     .page-footer {
       text-align: center;
@@ -205,16 +237,19 @@
       <div style="font-size:11px;letter-spacing:.18em;color:#5a8a6a;font-weight:500;text-transform:uppercase;">Guesthouse</div>
     </div>
   </div>
-  <!-- Title -->
-  <h1>
-    <span data-lang="it">🍽️ Ristoranti Consigliati</span>
-    <span data-lang="en">🍽️ Our Restaurant Recommendations</span>
-  </h1>
-  <p class="subtitle">
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" id="tab-btn-ristoranti" onclick="setTab('ristoranti')">🍽️ <span data-lang="it">Ristoranti</span><span data-lang="en">Restaurants</span></button>
+    <button class="tab-btn" id="tab-btn-colazione" onclick="setTab('colazione')">☕ <span data-lang="it">Colazione</span><span data-lang="en">Breakfast</span></button>
+  </div>
+  <div class="tab-content-area">
+
+  <!-- Tab: Ristoranti -->
+  <div id="panel-ristoranti">
+  <p class="subtitle" style="padding: 0 4px 20px;">
     <span data-lang="it">Una selezione personale dei nostri posti preferiti a Livorno.<br>Buon appetito!</span>
     <span data-lang="en">A personal selection of our favourite spots in Livorno.<br>Enjoy your meal!</span>
   </p>
-  <!-- Restaurants -->
   <div class="restaurant-list">
 
     <!-- NANNINI – Guida Michelin -->
@@ -492,6 +527,135 @@
       </div>
     </div>
   </div>
+  </div><!-- end panel-ristoranti -->
+
+  <!-- Tab: Colazione -->
+  <div id="panel-colazione" style="display:none;">
+    <p class="subtitle" style="padding: 0 4px 20px;">
+      <span data-lang="it">I nostri posti preferiti per iniziare bene la giornata a Livorno.</span>
+      <span data-lang="en">Our favourite spots to start the day in Livorno.</span>
+    </p>
+    <div class="restaurant-list">
+
+      <!-- Baracchina Bianca -->
+      <div class="restaurant-item">
+        <img class="restaurant-photo"
+          src="https://images.unsplash.com/photo-1654171567840-58c77ee342d9?auto=format&fit=crop&w=680&h=180"
+          alt="Caffetteria Baracchina Bianca"
+          onerror="this.style.background='linear-gradient(135deg,#43e97b,#38f9d7)';this.style.opacity='.4';this.removeAttribute('src');"
+        />
+        <div class="restaurant-content">
+          <div class="restaurant-name">Caffetteria Baracchina Bianca</div>
+          <div class="restaurant-note">
+            <span data-lang="it">Aperitivi e spuntino vista mare!!</span>
+            <span data-lang="en">Aperitifs and snacks with a sea view!!</span>
+          </div>
+          <div class="restaurant-footer">
+            <div class="restaurant-address">Piazza S. Jacopo in Acquaviva, 19 – Livorno</div>
+            <a class="maps-btn" href="https://maps.app.goo.gl/7jCb86ezdGCp4CWg7" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manalù -->
+      <div class="restaurant-item">
+        <img class="restaurant-photo"
+          src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=680&h=180"
+          alt="Manalù Bistrot"
+          onerror="this.style.background='linear-gradient(135deg,#f093fb,#f5576c)';this.style.opacity='.4';this.removeAttribute('src');"
+        />
+        <div class="restaurant-content">
+          <div class="restaurant-name">Manalù – Bistrot &amp; Bakery Lab</div>
+          <div class="restaurant-note">
+            <span data-lang="it">Total gluten-free!!</span>
+            <span data-lang="en">Completely gluten-free!!</span>
+          </div>
+          <div class="restaurant-footer">
+            <div class="restaurant-address">P.za Elia Benamozegh, 15 – Livorno</div>
+            <a class="maps-btn" href="https://maps.app.goo.gl/7T5QTpAMEQQU3Uwp8" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Il Frataio -->
+      <div class="restaurant-item">
+        <img class="restaurant-photo"
+          src="https://images.unsplash.com/photo-1631275975373-f228a7813437?auto=format&fit=crop&w=680&h=180"
+          alt="Il Frataio Antica Friggitoria"
+          onerror="this.style.background='linear-gradient(135deg,#f7971e,#ffd200)';this.style.opacity='.5';this.removeAttribute('src');"
+        />
+        <div class="restaurant-content">
+          <div class="restaurant-name">Il Frataio Antica Friggitoria</div>
+          <div class="restaurant-note">
+            <span data-lang="it">Friggitoria storica di Livorno, in Piazza Cavallotti.</span>
+            <span data-lang="en">Historic Livorno fried food shop, in Piazza Cavallotti.</span>
+          </div>
+          <div class="restaurant-footer">
+            <div class="restaurant-address">Via del Cardinale, 9 (Piazza Cavallotti) – Livorno</div>
+            <a class="maps-btn" href="https://maps.app.goo.gl/3J487yZCMbzw8NMv6" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loretta Fanella -->
+      <div class="restaurant-item">
+        <img class="restaurant-photo"
+          src="https://images.unsplash.com/photo-1583338917451-face2751d8d5?auto=format&fit=crop&w=680&h=180"
+          alt="Loretta Fanella Pâtisserie"
+          onerror="this.style.background='linear-gradient(135deg,#f8cdda,#1d2b64)';this.style.opacity='.4';this.removeAttribute('src');"
+        />
+        <div class="restaurant-content">
+          <div class="restaurant-name">Loretta Fanella Pâtisserie</div>
+          <div class="restaurant-note">
+            <span data-lang="it">Pasticceria d'autore firmata dalla celebre pastry chef Loretta Fanella.</span>
+            <span data-lang="en">Artisan pastry shop by celebrated pastry chef Loretta Fanella.</span>
+          </div>
+          <div class="restaurant-footer">
+            <div class="restaurant-address">Via Grande, 208 – Livorno</div>
+            <a class="maps-btn" href="https://maps.app.goo.gl/RC7UacT2XyZgJSv69" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pasticceria Cairoli -->
+      <div class="restaurant-item">
+        <img class="restaurant-photo"
+          src="https://images.unsplash.com/photo-1567941723610-db0bcb4cca67?auto=format&fit=crop&w=680&h=180"
+          alt="Pasticceria Cairoli"
+          onerror="this.style.background='linear-gradient(135deg,#f6d365,#fda085)';this.style.opacity='.5';this.removeAttribute('src');"
+        />
+        <div class="restaurant-content">
+          <div class="restaurant-name">Pasticceria Cairoli</div>
+          <div class="restaurant-note">
+            <span data-lang="it">Pasticceria storica nel cuore di Livorno.</span>
+            <span data-lang="en">Historic pastry shop in the heart of Livorno.</span>
+          </div>
+          <div class="restaurant-footer">
+            <div class="restaurant-address">Via Cairoli, 1 – Livorno</div>
+            <a class="maps-btn" href="https://maps.app.goo.gl/RMrBSNNJsWz4DoVA7" target="_blank">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- end panel-colazione -->
+
+  </div><!-- end tab-content-area -->
   <!-- Footer -->
   <p class="page-footer">I Bimbi Guesthouse · Livorno</p>
 </div>
@@ -501,6 +665,12 @@
     card.className = 'card lang-' + lang;
     document.getElementById('btn-it').classList.toggle('active', lang === 'it');
     document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  }
+  function setTab(tab) {
+    document.getElementById('panel-ristoranti').style.display = tab === 'ristoranti' ? '' : 'none';
+    document.getElementById('panel-colazione').style.display  = tab === 'colazione'  ? '' : 'none';
+    document.getElementById('tab-btn-ristoranti').classList.toggle('active', tab === 'ristoranti');
+    document.getElementById('tab-btn-colazione').classList.toggle('active',  tab === 'colazione');
   }
   setLang('it');
 </script>

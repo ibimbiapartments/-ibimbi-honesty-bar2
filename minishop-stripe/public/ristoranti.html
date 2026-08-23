@@ -6,7 +6,6 @@
   <title>I Bimbi Guesthouse – Ristoranti Consigliati</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       background-color: #edf2f7;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -17,7 +16,6 @@
       padding: 40px 16px 60px;
       color: #1a202c;
     }
-
     .card {
       background: #fff;
       border-radius: 20px;
@@ -27,7 +25,6 @@
       padding: 36px 36px 40px;
       position: relative;
     }
-
     /* Language toggle */
     .lang-toggle {
       position: absolute;
@@ -52,7 +49,6 @@
       color: #fff;
       border-color: #1a202c;
     }
-
     /* Logo */
     .logo {
       display: flex;
@@ -65,7 +61,6 @@
       height: 72px;
       width: auto;
     }
-
     /* Page title */
     h1 {
       font-size: 22px;
@@ -81,14 +76,12 @@
       margin-bottom: 28px;
       line-height: 1.5;
     }
-
     /* Restaurant list */
     .restaurant-list {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
-
     /* Restaurant card */
     .restaurant-item {
       background: #f7fafc;
@@ -101,7 +94,6 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.10);
       transform: translateY(-2px);
     }
-
     /* Photo */
     .restaurant-photo {
       width: 100%;
@@ -110,7 +102,6 @@
       display: block;
       background-color: #cbd5e0;
     }
-
     /* Content */
     .restaurant-content {
       padding: 14px 16px 16px;
@@ -119,21 +110,18 @@
       flex-direction: column;
       gap: 6px;
     }
-
     .restaurant-name {
       font-size: 15px;
       font-weight: 700;
       color: #1a202c;
       line-height: 1.3;
     }
-
     .restaurant-note {
       font-size: 13px;
       color: #4a5568;
       font-style: italic;
       line-height: 1.4;
     }
-
     .restaurant-footer {
       display: flex;
       align-items: center;
@@ -142,14 +130,12 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .restaurant-address {
       font-size: 12px;
       color: #a0aec0;
       flex: 1;
       min-width: 0;
     }
-
     .maps-btn {
       display: inline-flex;
       align-items: center;
@@ -167,7 +153,17 @@
     }
     .maps-btn:hover { background: #2b6cb0; }
     .maps-btn svg { width: 14px; height: 14px; }
-
+    /* Michelin badge */
+    .michelin-badge {
+      background: #e53e3e;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     /* Footer note */
     .page-footer {
       text-align: center;
@@ -175,7 +171,6 @@
       font-size: 12px;
       color: #a0aec0;
     }
-
     /* Multilingual */
     [data-lang] { display: none; }
     .lang-it [data-lang="it"],
@@ -184,13 +179,11 @@
 </head>
 <body>
 <div class="card lang-it" id="main-card">
-
   <!-- Language toggle -->
   <div class="lang-toggle">
     <button class="active" id="btn-it" onclick="setLang('it')">IT</button>
     <button id="btn-en" onclick="setLang('en')">EN</button>
   </div>
-
   <!-- Logo -->
   <div class="logo">
     <img
@@ -212,7 +205,6 @@
       <div style="font-size:11px;letter-spacing:.18em;color:#5a8a6a;font-weight:500;text-transform:uppercase;">Guesthouse</div>
     </div>
   </div>
-
   <!-- Title -->
   <h1>
     <span data-lang="it">🍽️ Ristoranti Consigliati</span>
@@ -222,9 +214,34 @@
     <span data-lang="it">Una selezione personale dei nostri posti preferiti a Livorno.<br>Buon appetito!</span>
     <span data-lang="en">A personal selection of our favourite spots in Livorno.<br>Enjoy your meal!</span>
   </p>
-
   <!-- Restaurants -->
   <div class="restaurant-list">
+
+    <!-- NANNINI – Guida Michelin -->
+    <div class="restaurant-item" style="border: 2px solid #e53e3e;">
+      <img class="restaurant-photo"
+        src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=680&h=180"
+        alt="Nannini Ristorante"
+        onerror="this.style.background='linear-gradient(135deg,#1a1a2e,#16213e)';this.style.opacity='.6';this.removeAttribute('src');"
+      />
+      <div class="restaurant-content" style="border-left-color: #e53e3e;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+          <div class="restaurant-name">Nannini Ristorante</div>
+          <span class="michelin-badge">⭐ Guida Michelin</span>
+        </div>
+        <div class="restaurant-note">
+          <span data-lang="it">Quasi esclusivamente pesce in piatti originali, con gran rispetto per l'identità dei prodotti. Tra le specialità, i pesci frollati. Un'esperienza gastronomica di grande qualità.</span>
+          <span data-lang="en">Almost exclusively fish in original dishes, with great respect for each ingredient. A speciality: dry-aged fish. A truly high-quality gastronomic experience.</span>
+        </div>
+        <div class="restaurant-footer">
+          <div class="restaurant-address">Piazza Giampaolo Bartolommei, 1 – Livorno</div>
+          <a class="maps-btn" href="https://maps.app.goo.gl/mmKx5YPwG9L78WdWA" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span data-lang="it">Mappa</span><span data-lang="en">Map</span>
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- 1. L'Amo -->
     <div class="restaurant-item">
@@ -248,7 +265,6 @@
         </div>
       </div>
     </div>
-
     <!-- 2. Baracchina Bianca -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -271,7 +287,6 @@
         </div>
       </div>
     </div>
-
     <!-- 3. Manalù -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -294,7 +309,6 @@
         </div>
       </div>
     </div>
-
     <!-- 4. Cantina Nardi -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -317,7 +331,6 @@
         </div>
       </div>
     </div>
-
     <!-- 5. Da Gagarin -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -340,7 +353,6 @@
         </div>
       </div>
     </div>
-
     <!-- 6. Chez Ugo -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -363,7 +375,6 @@
         </div>
       </div>
     </div>
-
     <!-- 7. BorgoCarniDOC -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -386,7 +397,6 @@
         </div>
       </div>
     </div>
-
     <!-- 8. Incarne -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -409,7 +419,6 @@
         </div>
       </div>
     </div>
-
     <!-- 9. Trattoria Da Galileo -->
     <div class="restaurant-item">
       <img class="restaurant-photo"
@@ -432,16 +441,18 @@
         </div>
       </div>
     </div>
-
     <!-- 10. Azzighe -->
-    <div class="restaurant-item">
+    <div class="restaurant-item" style="border: 2px solid #e53e3e;">
       <img class="restaurant-photo"
         src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=680&h=180"
         alt="Azzighe Osteria"
         onerror="this.style.background='linear-gradient(135deg,#56ab2f,#a8e063)';this.style.opacity='.4';this.removeAttribute('src');"
       />
-      <div class="restaurant-content">
+      <div class="restaurant-content" style="border-left-color: #e53e3e;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
         <div class="restaurant-name">Azzighe – Osteria a metà</div>
+        <span class="michelin-badge">⭐ Guida Michelin</span>
+        </div>
         <div class="restaurant-note">
           <span data-lang="it">Cucina tipica ma con stile, da provare!!</span>
           <span data-lang="en">Traditional cuisine with a twist — a must try!!</span>
@@ -455,16 +466,18 @@
         </div>
       </div>
     </div>
-
     <!-- 11. Ristorante Oscar -->
-    <div class="restaurant-item">
+    <div class="restaurant-item" style="border: 2px solid #e53e3e;">
       <img class="restaurant-photo"
         src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?auto=format&fit=crop&w=680&h=180"
         alt="Ristorante Oscar"
         onerror="this.style.background='linear-gradient(135deg,#1a6dab,#c1dfc4)';this.style.opacity='.5';this.removeAttribute('src');"
       />
-      <div class="restaurant-content">
+      <div class="restaurant-content" style="border-left-color: #e53e3e;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
         <div class="restaurant-name">Ristorante Oscar</div>
+        <span class="michelin-badge">⭐ Guida Michelin</span>
+        </div>
         <div class="restaurant-note">
           <span data-lang="it">Migliore in città per pesce e crostacei.</span>
           <span data-lang="en">Best in town for fish and seafood.</span>
@@ -478,14 +491,10 @@
         </div>
       </div>
     </div>
-
   </div>
-
   <!-- Footer -->
   <p class="page-footer">I Bimbi Guesthouse · Livorno</p>
-
 </div>
-
 <script>
   function setLang(lang) {
     const card = document.getElementById('main-card');

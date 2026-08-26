@@ -43,6 +43,14 @@
     .box{background:#f1f3f6;border-radius:14px;padding:18px 20px;text-align:left;margin:0 auto 28px;max-width:540px}
     .row{display:flex;justify-content:space-between;font-size:15px;margin:6px 0}
     .row b{color:#000}
+    .warning-box{
+      display:flex;align-items:flex-start;gap:12px;
+      background:#fff8e6;border:1px solid #f5c96b;border-radius:14px;
+      padding:16px 18px;text-align:left;margin:0 auto 28px;max-width:540px;
+    }
+    .warning-box .warn-icon{font-size:22px;line-height:1;flex-shrink:0;}
+    .warning-box .warn-text{font-size:14.5px;line-height:1.5;color:#7a5b00;}
+    .warning-box .warn-text b{color:#5c4400;}
     .calendar-section{margin:0 auto 28px;max-width:540px;text-align:left;}
     .calendar-section label{font-size:14px;color:var(--muted);display:block;margin-bottom:8px;}
     .calendar-wrap{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;}
@@ -111,6 +119,13 @@
         <div class="row"><span data-i18n="deposit">Deposito (pre-autorizzazione 3 giorni prima dell'arrivo)</span><b>€ 50,00</b></div>
       </div>
 
+      <div class="warning-box">
+        <span class="warn-icon">🔑</span>
+        <span class="warn-text" data-i18n="keyWarning">
+          <b>Attenzione – Ritiro chiavi:</b> prima di accedere al garage con l'auto, è necessario ritirare la chiave di accesso presso la guesthouse. L'ingresso al garage non è possibile senza chiave.
+        </span>
+      </div>
+
       <div class="calendar-section">
         <label data-i18n="calLabel">Seleziona la data di arrivo:</label>
         <div class="calendar-wrap">
@@ -156,6 +171,7 @@ const APPS_SCRIPT_URL = '/api/parking';
                Inoltre, <b>3 giorni prima dell'arrivo</b> ti verrà richiesto di <b>autorizzare un deposito di 50 €</b> a garanzia della chiave del garage.`,
         parking: "Pagamento prenotazione parcheggio",
         deposit: "Deposito (pre-autorizzazione 3 giorni prima dell'arrivo)",
+        keyWarning: "<b>Attenzione – Ritiro chiavi:</b> prima di accedere al garage con l'auto, è necessario ritirare la chiave di accesso presso la guesthouse. L'ingresso al garage non è possibile senza chiave.",
         btnPay: "💳 Paga e conferma prenotazione (25 €)",
         btnDeposit: "🔒 Autorizza deposito (50 €)",
         foot: "Pagamenti sicuri con Stripe · 3D Secure automatico",
@@ -177,6 +193,7 @@ const APPS_SCRIPT_URL = '/api/parking';
                In addition, <b>3 days before arrival</b>, you'll be asked to <b>authorize a €50 deposit</b> as a guarantee for the garage key.`,
         parking: "Parking reservation payment",
         deposit: "Deposit (pre-authorization 3 days before arrival)",
+        keyWarning: "<b>Attention – Key pickup:</b> before driving into the garage, you must first pick up the access key at the guesthouse. The garage cannot be accessed without the key.",
         btnPay: "💳 Pay and confirm reservation (€25)",
         btnDeposit: "🔒 Authorize deposit (€50)",
         foot: "Secure payments with Stripe · 3D Secure enabled",

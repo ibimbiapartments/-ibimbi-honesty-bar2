@@ -11,6 +11,7 @@
       --bg:#f7f8fa; --card:#ffffff; --text:#1b1e23; --muted:#6b7280; --border:#e0e4ea;
       --primary:#1e90ff; --primary-hover:#1879da;
       --success:#00b894; --success-hover:#029d7f;
+      --amazon-yellow:#ffd814; --amazon-yellow-hover:#f7ca00; --amazon-yellow-border:#fcd200;
       --danger:#e74c3c;
       --radius:20px; --shadow:0 6px 25px rgba(0,0,0,.08);
     }
@@ -53,7 +54,7 @@
     .warning-box .warn-text b{color:#5c4400;}
     .info-box{
       background:#f1f3f6;border:1px solid var(--border);border-radius:14px;
-      padding:14px 18px;text-align:left;margin:0 auto 20px;max-width:540px;
+      padding:14px 18px;text-align:left;margin:28px auto 20px;max-width:540px;
       font-size:13.5px;line-height:1.55;color:var(--muted);
     }
     .info-box b{color:var(--text);}
@@ -93,9 +94,9 @@
       padding:14px 18px;border-radius:12px;font-weight:600;font-size:16px;text-decoration:none;
       color:#fff;transition:all .2s ease;cursor:pointer;border:none;
     }
-    .btn.pay{background:var(--primary);}
-    .btn.pay:hover:not(:disabled){background:var(--primary-hover);transform:translateY(-1px);}
-    .btn.pay:disabled{background:#93c5fd;cursor:not-allowed;}
+    .btn.pay{background:var(--amazon-yellow);border:1px solid var(--amazon-yellow-border);color:#0f1111;font-weight:700;}
+    .btn.pay:hover:not(:disabled){background:var(--amazon-yellow-hover);transform:translateY(-1px);}
+    .btn.pay:disabled{background:#f5e6c4;border-color:#d9c896;color:#8a8a80;cursor:not-allowed;}
     .btn.deposit{background:var(--success);}
     .btn.deposit:hover{background:var(--success-hover);transform:translateY(-1px);}
     footer{margin-top:28px;font-size:13px;color:var(--muted)}

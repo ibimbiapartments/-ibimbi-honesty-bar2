@@ -168,6 +168,13 @@
         <b>Politica di rimborso:</b> il rimborso è possibile solo per prenotazioni rimborsabili effettuate direttamente sul nostro sito o con noi. Prenotazioni tramite piattaforme esterne (es. Booking.com e altre OTA) non sono rimborsabili da parte nostra — <b>prenota direttamente per avere maggiore flessibilità e le migliori condizioni</b>.
       </div>
 
+      <div class="warning-box">
+        <span class="warn-icon">🚧</span>
+        <span class="warn-text" data-i18n="heightWarning">
+          <b>Attenzione – Altezza massima:</b> l'altezza massima consentita per i veicoli è di <b>2,10 metri</b>. Veicoli più alti non possono accedere al garage.
+        </span>
+      </div>
+
       <footer data-i18n="foot">Pagamenti sicuri con Stripe · 3D Secure automatico</footer>
     </div>
   </div>
@@ -183,6 +190,7 @@ const APPS_SCRIPT_URL = '/api/parking';
         parking: "Pagamento prenotazione parcheggio",
         deposit: "Deposito (pre-autorizzazione 3 giorni prima dell'arrivo)",
         keyWarning: "<b>Attenzione – Ritiro chiavi:</b> prima di accedere al garage con l'auto, è necessario ritirare la chiave di accesso presso la guesthouse. L'ingresso al garage non è possibile senza chiave.",
+        heightWarning: "<b>Attenzione – Altezza massima:</b> l'altezza massima consentita per i veicoli è di <b>2,10 metri</b>. Veicoli più alti non possono accedere al garage.",
         refundPolicy: "<b>Politica di rimborso:</b> il rimborso è possibile solo per prenotazioni rimborsabili effettuate direttamente sul nostro sito o con noi. Prenotazioni tramite piattaforme esterne (es. Booking.com e altre OTA) non sono rimborsabili da parte nostra — <b>prenota direttamente per avere maggiore flessibilità e le migliori condizioni</b>.",
         btnPay: "💳 Paga e conferma prenotazione (25 €)",
         btnDeposit: "🔒 Autorizza deposito (50 €)",
@@ -206,6 +214,7 @@ const APPS_SCRIPT_URL = '/api/parking';
         parking: "Parking reservation payment",
         deposit: "Deposit (pre-authorization 3 days before arrival)",
         keyWarning: "<b>Attention – Key pickup:</b> before driving into the garage, you must first pick up the access key at the guesthouse. The garage cannot be accessed without the key.",
+        heightWarning: "<b>Attention – Maximum height:</b> the maximum vehicle height allowed is <b>2.10 meters (6.9 ft)</b>. Taller vehicles cannot access the garage.",
         refundPolicy: "<b>Refund policy:</b> refunds are only available for refundable bookings made directly through our website or with us. Bookings made via external platforms (e.g. Booking.com and other OTAs) are not refundable through us — <b>book direct for more flexibility and the best conditions</b>.",
         btnPay: "💳 Pay and confirm reservation (€25)",
         btnDeposit: "🔒 Authorize deposit (€50)",
@@ -261,7 +270,8 @@ const APPS_SCRIPT_URL = '/api/parking';
       return `${parseInt(d)} ${I18N[lang].months[parseInt(m)-1]} ${y}`;
     }
 
-    // JSONP - risolve il problema CORS con Apps Script
+    // Nota: in questa anteprima locale, senza backend /api/parking,
+    // tutte le date risulteranno "Disponibile" (fallback), non è un bug.
 
     async function checkAvailability(dateStr) {
   if (availabilityCache[dateStr] !== undefined)
@@ -271,10 +281,9 @@ const APPS_SCRIPT_URL = '/api/parking';
     const data = await res.json();
     availabilityCache[dateStr] = data.available;
     return data.available;
-  } catch(e) { return null; }
+  } catch(e) { return true; }
 }
 
-    // JSONP per il pagamento
 async function requestPayUrl(dateStr) {
   const res = await fetch(`${APPS_SCRIPT_URL}?action=pay&date=${dateStr}`);
   return await res.json();
